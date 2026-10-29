@@ -145,6 +145,104 @@ nav ul a:hover{color:var(--fg)} nav ul a:hover::after{transform:scaleX(1);transf
 .job .env{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
 .job .env li{border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.85rem;color:var(--mute)}
 
+/* tools in action: four animated illustrations */
+.demos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.demo{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg2);display:flex;flex-direction:column;transition:border-color .4s}
+.demo:hover{border-color:var(--c)}
+.demo .viz{height:340px;position:relative;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line);
+  background:radial-gradient(ellipse at 50% 0%,var(--g),transparent 70%)}
+.demo .txt{padding:24px 26px 28px}
+.demo .txt .mono{color:var(--c)}
+.demo h3{font:700 1.5rem Syne;margin:6px 0 8px}
+.demo .txt p:last-child{color:var(--mute);font-size:.95rem}
+.demo .note{position:absolute;right:12px;bottom:10px;font-size:.6rem}
+@media (max-width:860px){.demos{grid-template-columns:minmax(0,1fr)}}
+
+/* canvas app */
+.phone{width:170px;height:300px;border-radius:26px;border:6px solid #262626;background:#f4f1f6;box-shadow:0 30px 60px rgba(0,0,0,.5);overflow:hidden;
+  font-size:.62rem;color:#222;position:relative;display:flex;flex-direction:column;z-index:1}
+.phone .bar{background:#742774;color:#fff;padding:12px 10px 8px;font-weight:700;display:flex;justify-content:space-between}
+.phone .search{margin:8px;padding:6px 8px;border-radius:6px;background:#fff;border:1px solid #ddd;color:#999}
+.gal{list-style:none;padding:0 8px;display:grid;gap:6px}
+.gal li{background:#fff;border-radius:8px;padding:6px 8px;display:grid;grid-template-columns:22px 1fr;column-gap:7px;box-shadow:0 1px 2px rgba(0,0,0,.08);opacity:0;transform:translateX(30px)}
+.gal li i{grid-row:span 2;width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#c35fc3,#742774)}
+.gal li small{color:#888}
+.demo.in .gal li{animation:slidein .6s var(--ease) forwards}
+.demo.in .gal li:nth-child(2){animation-delay:.15s}.demo.in .gal li:nth-child(3){animation-delay:.3s}
+@keyframes slidein{to{opacity:1;transform:none}}
+.tgl{margin:10px 8px 0;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.tgl span{width:30px;height:16px;border-radius:9px;background:#ccc;position:relative}
+.tgl span::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff}
+.demo.in .tgl span{animation:tglbg 4s infinite}.demo.in .tgl span::after{animation:tglknob 4s infinite}
+@keyframes tglbg{0%,25%{background:#ccc}35%,100%{background:#742774}}
+@keyframes tglknob{0%,25%{transform:none}35%,100%{transform:translateX(14px)}}
+.cta{margin:auto 8px 12px;background:#742774;color:#fff;border-radius:8px;text-align:center;padding:9px;font-weight:700}
+.demo.in .cta{animation:press 4s infinite}
+@keyframes press{0%,58%{transform:none}63%{transform:scale(.93)}70%,100%{transform:none}}
+.tap{position:absolute;left:50%;bottom:16px;width:26px;height:26px;margin-left:-13px;border-radius:50%;background:rgba(116,39,116,.45);opacity:0}
+.demo.in .tap{animation:tap 4s infinite}
+@keyframes tap{0%,55%{opacity:0;transform:scale(.4)}62%{opacity:1;transform:scale(1)}76%,100%{opacity:0;transform:scale(2.4)}}
+.toast{position:absolute;left:8px;right:8px;top:38px;background:#1f8a4c;color:#fff;border-radius:8px;padding:7px 8px;font-weight:700;opacity:0;transform:translateY(-10px)}
+.demo.in .toast{animation:toast 4s infinite}
+@keyframes toast{0%,66%{opacity:0;transform:translateY(-10px)}72%,92%{opacity:1;transform:none}100%{opacity:0}}
+.fx{position:absolute;font:500 .68rem "JetBrains Mono",monospace;background:#161616;border:1px solid var(--line);border-radius:10px;padding:8px 10px;color:var(--mute);white-space:nowrap;animation:float 5s ease-in-out infinite}
+.fx b{color:var(--c);font-weight:500}
+.demo .viz{container-type:inline-size}
+@container (max-width:520px){.fx{display:none}.kpi b{font-size:.85rem;white-space:nowrap}.kpi em{display:block;margin:2px 0 0}}
+
+/* power automate */
+.flow{display:flex;flex-direction:column;align-items:center;width:min(86%,380px)}
+.node{width:100%;background:#0f1522;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:.78rem;display:flex;gap:10px;align-items:center}
+.node i{font-style:normal;width:24px;height:24px;border-radius:6px;display:grid;place-items:center;background:rgba(77,142,255,.15);color:var(--c);flex:none}
+.node::after{content:"✓";margin-left:auto;color:var(--c);opacity:0}
+.demo.in .node{animation:lit 4s infinite var(--dl,0s)}
+.demo.in .node::after{animation:chk 4s infinite var(--dl,0s)}
+@keyframes lit{0%{border-color:var(--line);box-shadow:none}8%,72%{border-color:var(--c);box-shadow:0 0 0 3px rgba(77,142,255,.16),0 0 24px rgba(77,142,255,.22)}88%,100%{border-color:var(--line);box-shadow:none}}
+@keyframes chk{0%,6%{opacity:0}12%,72%{opacity:1}88%,100%{opacity:0}}
+.link{width:2px;height:18px;background:repeating-linear-gradient(var(--c) 0 4px,transparent 4px 8px);animation:flowdash .6s linear infinite}
+@keyframes flowdash{to{background-position:0 8px}}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.split .node{font-size:.7rem;padding:8px 10px}
+.run{position:absolute;left:16px;top:14px;font-size:.62rem}
+
+/* dataverse */
+.erd{position:absolute;inset:0}
+.erd svg{position:absolute;inset:0;width:100%;height:100%}
+.erd line{stroke:var(--c);stroke-width:1.5;stroke-dasharray:5 5;vector-effect:non-scaling-stroke;opacity:.6}
+.demo.in .erd line{animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-10}}
+.tbl{position:absolute;left:var(--x);top:var(--y);width:clamp(108px,28%,150px);transform:translate(-50%,-50%) scale(.6);opacity:0;
+  background:#0d1712;border:1px solid rgba(60,207,126,.45);border-radius:10px;overflow:hidden}
+.demo.in .tbl{animation:tblin .6s var(--ease) forwards var(--dl,0s)}
+@keyframes tblin{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.tbl b{display:block;background:rgba(60,207,126,.16);color:var(--fg);padding:5px 8px;font:700 .72rem Syne}
+.tbl span{display:block;padding:3px 8px;color:var(--mute);border-top:1px solid rgba(255,255,255,.05);font:400 .6rem "JetBrains Mono",monospace;white-space:nowrap}
+.tbl .pk::before{content:"◆ ";color:var(--c)}
+.tbl .fk::before{content:"↗ ";color:var(--c)}
+
+/* power bi */
+.dash{width:min(92%,460px);height:280px;background:#141414;border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:auto 1fr;gap:10px}
+.kpis{grid-column:span 2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpi{background:#1b1b1b;border-radius:8px;padding:8px 10px;min-width:0}
+.kpi small{display:block;color:var(--mute);font-size:.58rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi b{font:700 1.05rem Syne;color:var(--fg)}
+.kpi em{font-style:normal;font-size:.58rem;color:#7ee2a8;margin-left:4px}
+.bars{position:relative;display:flex;align-items:flex-end;gap:3px;padding:22px 8px 8px;border-radius:8px;background:#1b1b1b;
+  background-image:repeating-linear-gradient(transparent 0 37px,#262626 37px 38px)}
+.bars::before{content:"CA mensuel (k€)";position:absolute;left:8px;top:6px;font-size:.58rem;color:var(--mute)}
+.bars i{flex:1;height:var(--h);background:#f2c811;border-radius:4px 4px 0 0;transform:scaleY(0);transform-origin:bottom;cursor:default}
+.bars i:hover{background:#fff1a8}
+.demo.in .bars i{animation:grow .9s var(--ease) forwards calc(var(--n) * 60ms)}
+@keyframes grow{to{transform:scaleY(1)}}
+.gauge{background:#1b1b1b;border-radius:8px;display:grid;place-items:center;position:relative}
+.gauge svg{width:min(110px,90%);transform:rotate(-90deg)}
+.gauge circle{fill:none;stroke-width:9}
+.gauge .val{stroke:#f2c811;stroke-linecap:round;stroke-dasharray:251.3;stroke-dashoffset:251.3}
+.demo.in .gauge .val{animation:gauge 1.6s var(--ease) forwards .3s}
+@keyframes gauge{to{stroke-dashoffset:45.2}}
+.gauge p{position:absolute;text-align:center;font:700 1.1rem Syne;line-height:1.1}
+.gauge p small{display:block;font:400 .55rem Manrope;color:var(--mute)}
+
 /* stack */
 .stackgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .cat{border:1px solid var(--line);border-radius:20px;padding:26px;transition:border-color .3s}
@@ -303,6 +401,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
   <ul>
     <li><a href="#apropos">À propos</a></li>
     <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#expertise">Expertise</a></li>
     <li><a href="#stack">Stack</a></li>
     <li><a href="#certifs">Certifications</a></li>
     <li><a href="#jeux">Jeux</a></li>
@@ -457,9 +556,95 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
   </div>
 </section>
 
+<section id="expertise" style="padding-top:0">
+  <div class="wrap">
+    <p class="mono rv">04 — Expertise</p>
+    <h2 class="rv">Mes outils<br>en <em>action</em>.</h2>
+    <div class="demos">
+
+      <article class="demo rv" style="--c:#d77ad7;--g:rgba(116,39,116,.35)">
+        <div class="viz">
+          <span class="fx" style="left:4%;top:14%"><b>Filter</b>(Demandes)</span>
+          <span class="fx" style="right:4%;bottom:16%;animation-delay:-2.5s"><b>Patch</b>(Demandes; …)</span>
+          <div class="phone" aria-hidden="true">
+            <div class="bar">Demandes terrain <span>＋</span></div>
+            <div class="search">Rechercher…</div>
+            <ul class="gal">
+              <li><i></i><b>Intervention #1042</b><small>En cours</small></li>
+              <li><i></i><b>Contrôle qualité</b><small>Validé</small></li>
+              <li><i></i><b>Audit sécurité</b><small>Planifié</small></li>
+            </ul>
+            <div class="tgl">Urgent <span></span></div>
+            <div class="cta">Valider</div>
+            <div class="toast">✓ Demande enregistrée</div>
+            <div class="tap"></div>
+          </div>
+        </div>
+        <div class="txt"><p class="mono">Power Apps</p><h3>Canvas Apps</h3><p>Des applications métier sur mesure, pensées pour le terrain : mobile, tablette et PC, connectées à vos données.</p></div>
+      </article>
+
+      <article class="demo rv" style="--d:.1s;--c:#5b9bff;--g:rgba(0,102,255,.28)">
+        <div class="viz">
+          <span class="run mono">▶ Exécution du flux</span>
+          <div class="flow" aria-hidden="true">
+            <div class="node" style="--dl:0s"><i>⚡</i>Quand une demande est créée</div>
+            <div class="link"></div>
+            <div class="node" style="--dl:.6s"><i>◇</i>Montant &gt; 10 000 € ?</div>
+            <div class="link"></div>
+            <div class="split">
+              <div class="node" style="--dl:1.2s"><i>✔</i>Lancer l'approbation</div>
+              <div class="node" style="--dl:1.2s"><i>✉</i>Notifier dans Teams</div>
+            </div>
+            <div class="link"></div>
+            <div class="node" style="--dl:1.8s"><i>⛁</i>Mettre à jour Dataverse</div>
+          </div>
+        </div>
+        <div class="txt"><p class="mono">Power Automate</p><h3>Automatisation</h3><p>Des processus automatisés de bout en bout : approbations, notifications et mises à jour de données, sans ressaisie.</p></div>
+      </article>
+
+      <article class="demo rv" style="--c:#4fd68b;--g:rgba(8,129,66,.32)">
+        <div class="viz">
+          <div class="erd" aria-hidden="true">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <line x1="22" y1="22" x2="50" y2="50"/><line x1="78" y1="22" x2="50" y2="50"/>
+              <line x1="22" y1="78" x2="50" y2="50"/><line x1="78" y1="78" x2="78" y2="22"/>
+            </svg>
+            <div class="tbl" style="--x:22%;--y:22%;--dl:.15s"><b>Contact</b><span class="pk">Nom complet</span><span>E-mail</span><span class="fk">Compte</span></div>
+            <div class="tbl" style="--x:78%;--y:22%;--dl:.3s"><b>Opportunité</b><span class="pk">Sujet</span><span>Montant</span><span class="fk">Compte</span></div>
+            <div class="tbl" style="--x:50%;--y:50%;--dl:0s"><b>Compte</b><span class="pk">Nom</span><span>Secteur</span><span>Chiffre d'affaires</span></div>
+            <div class="tbl" style="--x:22%;--y:78%;--dl:.45s"><b>Activité</b><span class="pk">Objet</span><span>Échéance</span><span class="fk">Concernant</span></div>
+            <div class="tbl" style="--x:78%;--y:78%;--dl:.6s"><b>Ligne d'offre</b><span class="pk">Produit</span><span>Quantité</span><span class="fk">Opportunité</span></div>
+          </div>
+        </div>
+        <div class="txt"><p class="mono">Dataverse</p><h3>Modèle de données</h3><p>Des données bien structurées : tables, relations, règles métier et sécurité par rôle.</p></div>
+      </article>
+
+      <article class="demo rv" style="--d:.1s;--c:#f2c811;--g:rgba(242,200,17,.2)">
+        <div class="viz">
+          <div class="dash">
+            <div class="kpis">
+              <div class="kpi"><small>Chiffre d'affaires</small><b>1,24 M€</b><em>▲ 12 %</em></div>
+              <div class="kpi"><small>Opportunités</small><b data-count="318">0</b></div>
+              <div class="kpi"><small>Conversion</small><b><span data-count="27">0</span> %</b></div>
+            </div>
+            <div class="bars" role="img" aria-label="Chiffre d'affaires mensuel fictif, de 62 k€ en janvier à 124 k€ en décembre"><i style="--h:48%;--n:0" title="Jan : 62 k€"></i><i style="--h:54%;--n:1" title="Fév : 70 k€"></i><i style="--h:45%;--n:2" title="Mar : 58 k€"></i><i style="--h:62%;--n:3" title="Avr : 81 k€"></i><i style="--h:59%;--n:4" title="Mai : 77 k€"></i><i style="--h:69%;--n:5" title="Juin : 90 k€"></i><i style="--h:66%;--n:6" title="Juil : 86 k€"></i><i style="--h:73%;--n:7" title="Août : 95 k€"></i><i style="--h:68%;--n:8" title="Sep : 88 k€"></i><i style="--h:80%;--n:9" title="Oct : 104 k€"></i><i style="--h:86%;--n:10" title="Nov : 112 k€"></i><i style="--h:95%;--n:11" title="Déc : 124 k€"></i></div>
+            <div class="gauge" role="img" aria-label="82 % de l'objectif annuel">
+              <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" stroke="#262626"/><circle class="val" cx="50" cy="50" r="40"/></svg>
+              <p>82 %<small>de l'objectif</small></p>
+            </div>
+          </div>
+          <span class="note mono">Exemple · données fictives</span>
+        </div>
+        <div class="txt"><p class="mono">Power BI</p><h3>Pilotage</h3><p>Des tableaux de bord pour suivre l'activité en temps réel et décider plus vite.</p></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
 <section id="stack" style="padding-top:0">
   <div class="wrap">
-    <p class="mono rv">04 — Stack technique</p>
+    <p class="mono rv">05 — Stack technique</p>
     <h2 class="rv">Ma <em>boîte</em><br>à outils.</h2>
     <div class="stackgrid">
       <div class="cat rv"><h3><span>01</span>Power Platform &amp; Dynamics</h3><div><span>Power Apps Canvas</span><span>Model-Driven Apps</span><span>Power Automate</span><span>Power BI</span><span>Power Virtual Agents</span><span>AI Builder</span><span>Dynamics 365 Sales</span><span>Field Service</span></div></div>
@@ -474,7 +659,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section id="certifs" style="background:var(--bg2)">
   <div class="wrap">
-    <p class="mono rv">05 — Certifications</p>
+    <p class="mono rv">06 — Certifications</p>
     <h2 class="rv">Certifié de<br>A à <em>Z</em>.</h2>
     <p class="rv" style="color:var(--mute);margin:-20px 0 40px">Les 5 certifications Power Platform, obtenues en 7 mois.</p>
     <div class="certs">
@@ -509,7 +694,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section id="jeux" style="padding-top:0">
   <div class="wrap">
-    <p class="mono rv">06 — Mes jeux</p>
+    <p class="mono rv">07 — Mes jeux</p>
     <h2 class="rv">Quand le tech lead<br>devient <em>game designer</em>.</h2>
     <p class="games-intro rv" style="color:var(--mute)">Deux jeux mobiles conçus, écrits et développés de A à Z : un platformer piégé plein d'humour et un laboratoire de sciences et de maths pour apprendre en jouant.</p>
 
@@ -584,7 +769,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section style="padding-top:0">
   <div class="wrap">
-    <p class="mono rv">07 — Formation &amp; langues</p>
+    <p class="mono rv">08 — Formation &amp; langues</p>
     <div class="edu">
       <div class="rv"><p class="mono">2011 — 2014</p><b>Diplôme national d'ingénieur en génie logiciel</b><p style="color:var(--mute)">ESPRIT</p></div>
       <div class="rv" style="--d:.1s"><p class="mono">2007 — 2011</p><b>Maîtrise en informatique appliquée à la gestion</b><p style="color:var(--mute)">FSEGT</p></div>
@@ -599,7 +784,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section class="contact" id="contact" style="background:var(--bg2)">
   <div class="wrap">
-    <p class="mono rv">08 — Contact</p>
+    <p class="mono rv">09 — Contact</p>
     <h2 class="rv">Parlons<br><em>projet</em>.</h2>
     <a class="mail rv" href="mailto:bmouldi@gmail.com">bmouldi@gmail.com</a>
     <div class="btns rv">
