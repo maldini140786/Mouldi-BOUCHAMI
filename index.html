@@ -326,7 +326,7 @@ nav.open .menu span:first-child{transform:translateY(4px) rotate(45deg)}nav.open
 .js .interlude .ph.rv.in img{transform:none}
 .interlude blockquote{font:800 clamp(2rem,4.6vw,4rem)/1.02 Syne;letter-spacing:-.03em}
 .interlude blockquote em{font-style:normal;color:var(--accent)}
-.interlude blockquote span{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+.interlude blockquote .o{color:transparent;-webkit-text-stroke:1.5px var(--fg)}
 @media (max-width:860px){.interlude .wrap{grid-template-columns:minmax(0,1fr)}.interlude .ph{max-width:420px}}
 
 /* games */
@@ -425,6 +425,36 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .off,.off *{animation-play-state:paused!important}
 .morph{cursor:pointer}
 .mini-cta{margin-top:40px}
+
+/* headings: words rise out of a mask, one after another */
+.js h2.rv{opacity:1;transform:none}
+h2 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.js h2.rv .w>span{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease)}
+.js h2.rv.in .w>span{transform:none}
+.js h2.rv .pu{opacity:0;transition:opacity .6s}
+.js h2.rv.in .pu{opacity:1}
+
+/* spotlight that follows the pointer on cards */
+@property --sa{syntax:"<percentage>";inherits:false;initial-value:0%}
+.spot{background-image:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--sc,var(--accent)) var(--sa),transparent),transparent 45%);transition:--sa .35s,border-color .4s}
+.spot:hover{--sa:16%}
+.demo.spot{--sc:var(--c)}
+.cert.spot{transition:--sa .35s,transform .2s,border-color .3s}
+.cert.spot{background-image:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) var(--sa),transparent),transparent 45%),linear-gradient(160deg,var(--cert1),var(--cert2))}
+
+/* scroll-linked scan: the photo turns into the robot as it travels up the screen */
+.morph .scan{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;clip-path:inset(0 0 calc(100% - var(--p,0) * 100%) 0)}
+.morph .scanline{position:absolute;left:0;right:0;top:calc(var(--p,0) * 100%);height:2px;background:#8fe6ff;box-shadow:0 0 18px 4px rgba(80,200,255,.65);pointer-events:none;z-index:2;opacity:calc(var(--p,0) * (1 - var(--p,0)) * 4)}
+.interlude blockquote .day{opacity:calc(1 - var(--p,0) * .7)}
+.interlude blockquote .night{opacity:calc(.3 + var(--p,0) * .7)}
+@media (prefers-reduced-motion:reduce){.interlude blockquote .day,.interlude blockquote .night{opacity:1}}
+
+/* cursor label */
+.cursor::after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;font:600 .62rem "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:#000;opacity:0;transition:opacity .2s}
+.cursor.big::after{opacity:1}
+
+/* marquee leans with scroll speed */
+.marquee{transition:transform .5s var(--ease)}
 
 /* lightbox */
 dialog{margin:auto;border:0;background:transparent;max-width:94vw;max-height:94vh}
@@ -614,7 +644,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
     <h2 class="rv">Mes outils<br>en <em>action</em>.</h2>
     <div class="demos">
 
-      <article class="demo rv d-apps">
+      <article class="demo rv d-apps spot">
         <div class="viz">
           <span class="fx" style="left:4%;top:14%"><b>Filter</b>(Demandes)</span>
           <span class="fx" style="right:4%;bottom:16%;animation-delay:-2.5s"><b>Patch</b>(Demandes; …)</span>
@@ -635,7 +665,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
         <div class="txt"><p class="mono">Power Apps</p><h3>Canvas Apps</h3><p>Des applications métier sur mesure, pensées pour le terrain : mobile, tablette et PC, connectées à vos données.</p></div>
       </article>
 
-      <article class="demo rv d-flow" style="--d:.1s">
+      <article class="demo rv d-flow spot" style="--d:.1s">
         <div class="viz">
           <span class="run mono">▶ Exécution du flux</span>
           <div class="flow" aria-hidden="true">
@@ -654,7 +684,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
         <div class="txt"><p class="mono">Power Automate</p><h3>Automatisation</h3><p>Des processus automatisés de bout en bout : approbations, notifications et mises à jour de données, sans ressaisie.</p></div>
       </article>
 
-      <article class="demo rv d-dv">
+      <article class="demo rv d-dv spot">
         <div class="viz">
           <div class="erd" aria-hidden="true">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -671,7 +701,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
         <div class="txt"><p class="mono">Dataverse</p><h3>Modèle de données</h3><p>Des données bien structurées : tables, relations, règles métier et sécurité par rôle.</p></div>
       </article>
 
-      <article class="demo rv d-bi" style="--d:.1s">
+      <article class="demo rv d-bi spot" style="--d:.1s">
         <div class="viz">
           <div class="dash">
             <div class="kpis">
@@ -700,12 +730,12 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
     <p class="mono rv">05 — Stack technique</p>
     <h2 class="rv">Ma <em>boîte</em><br>à outils.</h2>
     <div class="stackgrid">
-      <div class="cat rv"><h3><span>01</span>Power Platform &amp; Dynamics</h3><div><span>Power Apps Canvas</span><span>Model-Driven Apps</span><span>Power Automate</span><span>Power BI</span><span>Power Virtual Agents</span><span>AI Builder</span><span>Dynamics 365 Sales</span><span>Field Service</span></div></div>
-      <div class="cat rv" style="--d:.08s"><h3><span>02</span>Données</h3><div><span>Dataverse</span><span>Dataverse for Teams</span><span>SharePoint</span><span>SQL Server</span><span>Oracle</span><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span></div></div>
-      <div class="cat rv" style="--d:.16s"><h3><span>03</span>Décisionnel</h3><div><span>Power BI</span><span>SSIS / SSDT</span><span>QlikView</span><span>Cognos</span><span>Data Vault</span></div></div>
-      <div class="cat rv"><h3><span>04</span>Microsoft Azure</h3><div><span>Synapse</span><span>Data Factory</span><span>Web Apps</span><span>PaaS / SaaS</span></div></div>
-      <div class="cat rv" style="--d:.08s"><h3><span>05</span>Langages</h3><div><span>C# / .NET</span><span>JavaScript</span><span>Java</span><span>Python</span><span>SQL</span><span>HTML / CSS</span></div></div>
-      <div class="cat rv" style="--d:.16s"><h3><span>06</span>Méthodes</h3><div><span>Agile</span><span>DevOps</span><span>UML</span><span>Gouvernance Power Platform</span><span>Godot (jeux)</span></div></div>
+      <div class="cat rv spot"><h3><span>01</span>Power Platform &amp; Dynamics</h3><div><span>Power Apps Canvas</span><span>Model-Driven Apps</span><span>Power Automate</span><span>Power BI</span><span>Power Virtual Agents</span><span>AI Builder</span><span>Dynamics 365 Sales</span><span>Field Service</span></div></div>
+      <div class="cat rv spot" style="--d:.08s"><h3><span>02</span>Données</h3><div><span>Dataverse</span><span>Dataverse for Teams</span><span>SharePoint</span><span>SQL Server</span><span>Oracle</span><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span></div></div>
+      <div class="cat rv spot" style="--d:.16s"><h3><span>03</span>Décisionnel</h3><div><span>Power BI</span><span>SSIS / SSDT</span><span>QlikView</span><span>Cognos</span><span>Data Vault</span></div></div>
+      <div class="cat rv spot"><h3><span>04</span>Microsoft Azure</h3><div><span>Synapse</span><span>Data Factory</span><span>Web Apps</span><span>PaaS / SaaS</span></div></div>
+      <div class="cat rv spot" style="--d:.08s"><h3><span>05</span>Langages</h3><div><span>C# / .NET</span><span>JavaScript</span><span>Java</span><span>Python</span><span>SQL</span><span>HTML / CSS</span></div></div>
+      <div class="cat rv spot" style="--d:.16s"><h3><span>06</span>Méthodes</h3><div><span>Agile</span><span>DevOps</span><span>UML</span><span>Gouvernance Power Platform</span><span>Godot (jeux)</span></div></div>
     </div>
   </div>
 </section>
@@ -716,11 +746,11 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
     <h2 class="rv">Certifié de<br>A à <em>Z</em>.</h2>
     <p class="rv" style="color:var(--mute);margin:-20px 0 40px">Les 5 certifications Power Platform, obtenues en 7 mois.</p>
     <div class="certs">
-      <div class="cert rv tilt"><b><small>Fundamentals</small>PL-900</b><p>Microsoft Power Platform Fundamentals</p><i>Déc. 2020</i></div>
-      <div class="cert rv tilt" style="--d:.08s"><b><small>Associate</small>PL-100</b><p>Power Platform App Maker</p><i>Fév. 2021</i></div>
-      <div class="cert rv tilt" style="--d:.16s"><b><small>Associate</small>PL-200</b><p>Power Platform Functional Consultant</p><i>Fév. 2021</i></div>
-      <div class="cert rv tilt" style="--d:.24s"><b><small>Associate</small>PL-400</b><p>Power Platform Developer</p><i>Fév. 2021</i></div>
-      <div class="cert rv tilt" style="--d:.32s;border-color:var(--accent)"><b><small>Expert</small>PL-600</b><p>Power Platform Solution Architect</p><i>Juil. 2021</i></div>
+      <div class="cert rv tilt spot"><b><small>Fundamentals</small>PL-900</b><p>Microsoft Power Platform Fundamentals</p><i>Déc. 2020</i></div>
+      <div class="cert rv tilt spot" style="--d:.08s"><b><small>Associate</small>PL-100</b><p>Power Platform App Maker</p><i>Fév. 2021</i></div>
+      <div class="cert rv tilt spot" style="--d:.16s"><b><small>Associate</small>PL-200</b><p>Power Platform Functional Consultant</p><i>Fév. 2021</i></div>
+      <div class="cert rv tilt spot" style="--d:.24s"><b><small>Associate</small>PL-400</b><p>Power Platform Developer</p><i>Fév. 2021</i></div>
+      <div class="cert rv tilt spot" style="--d:.32s;border-color:var(--accent)"><b><small>Expert</small>PL-600</b><p>Power Platform Solution Architect</p><i>Juil. 2021</i></div>
     </div>
   </div>
 </section>
@@ -730,15 +760,17 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
     <figure class="ph rv">
       <div class="clip morph">
         <img src="img/mouldi-jeux.webp" alt="Mouldi Bouchami assis sur un pouf, en sweat noir et baskets blanches" width="1024" height="1536">
+        <img class="scan" src="img/mouldi-jeux-robot.webp" alt="" aria-hidden="true" width="1024" height="1536">
+        <i class="scanline"></i>
         <img class="robot" src="img/mouldi-jeux-robot.webp" alt="" aria-hidden="true" width="1024" height="1536" loading="lazy">
         <i class="edge"></i>
         <span class="hint mono" style="top:18px"></span>
-        <span class="tag mono" style="color:#f2efe9">Off duty ✦</span>
+        <span class="tag mono" id="tag" style="color:#f2efe9">Off duty ✦</span>
       </div>
     </figure>
     <div>
       <p class="mono rv">Après le bureau</p>
-      <blockquote class="rv" style="--d:.1s;margin:20px 0 28px">Le jour, je construis des <span>applications</span>.<br>Le soir, je construis des <em>mondes</em>.</blockquote>
+      <blockquote class="rv" style="--d:.1s;margin:20px 0 28px"><span class="day">Le jour, je construis des <span class="o">applications</span>.</span><br><span class="night">Le soir, je construis des <em>mondes</em>.</span></blockquote>
       <p class="rv" style="--d:.2s;color:var(--mute);max-width:520px">La même envie de résoudre des problèmes, avec plus de liberté : imaginer les règles, écrire les histoires, dessiner les niveaux, coder chaque détail. Voici ce qui en est sorti.</p>
       <a class="btn mag rv" href="#jeux" style="--d:.3s;margin-top:32px">Voir les jeux ↓</a>
     </div>
@@ -856,6 +888,25 @@ document.documentElement.classList.add('js');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.getElementById('y').textContent = new Date().getFullYear();
 
+// split section headings into words so they can rise one by one (headlines only, never paragraphs)
+const splitWords = node => [...node.childNodes].forEach(n => {
+  if (n.nodeType === 1 && n.tagName !== 'BR') return splitWords(n);
+  if (n.nodeType !== 3) return;
+  const frag = document.createDocumentFragment();
+  n.textContent.split(/(\s+)/).forEach(w => {
+    if (!w) return;
+    if (/^\s+$/.test(w)) return frag.append(w);
+    if (/^[.,!?…:;]+$/.test(w)) { const pu = document.createElement('span'); pu.className = 'pu'; pu.textContent = w; return frag.append(pu); }
+    const o = document.createElement('span'), i = document.createElement('span');
+    o.className = 'w'; i.textContent = w; o.append(i); frag.append(o);
+  });
+  n.replaceWith(frag);
+});
+document.querySelectorAll('h2').forEach(h => {
+  splitWords(h);
+  h.querySelectorAll('.w>span,.pu').forEach((s, i) => s.style.transitionDelay = i * 70 + 'ms');
+});
+
 // split hero name into animated letters
 document.querySelectorAll('[data-split]').forEach((el, li) => {
   el.innerHTML = [...el.textContent].map((c, i) =>
@@ -884,7 +935,30 @@ addEventListener('scroll', () => {
   const r = tl.getBoundingClientRect(), p = (innerHeight * .6 - r.top) / r.height;
   bar.style.transform = `scaleY(${Math.max(0, Math.min(1, p))})`;
   if (!reduce && innerWidth > 860) photo.style.transform = `translateY(${scrollY * .12}px)`;
+  if (!reduce) { scrub(); lean(); }
 }, { passive: true });
+
+// interlude: the photo is scanned into the robot while it moves up the screen
+const inter = document.querySelector('.interlude'), fig = inter.querySelector('.ph'), tag = document.getElementById('tag');
+function scrub() {
+  const r = fig.getBoundingClientRect();
+  const p = Math.max(0, Math.min(1, (innerHeight * .9 - r.top) / (r.height + innerHeight * .5))); // about half robot when centred
+  inter.style.setProperty('--p', p.toFixed(3));
+  tag.textContent = p > .5 ? 'Mode robot ●' : 'Off duty ✦';
+}
+
+if (!reduce) scrub();
+
+// marquee leans with scroll speed, then settles
+const marquee = document.querySelector('.marquee');
+let lastY = scrollY, leanTimer;
+function lean() {
+  const v = Math.max(-8, Math.min(8, (scrollY - lastY) * .25));
+  lastY = scrollY;
+  marquee.style.transform = `skewX(${-v}deg)`;
+  clearTimeout(leanTimer);
+  leanTimer = setTimeout(() => marquee.style.transform = '', 120);
+}
 
 // stars for Elementa
 const stars = document.getElementById('stars');
@@ -898,10 +972,27 @@ for (let i = 0; i < 60; i++) {
 if (matchMedia('(hover:hover)').matches && !reduce) {
   const cur = document.querySelector('.cursor');
   addEventListener('mousemove', e => cur.style.transform = `translate(${e.clientX - cur.offsetWidth/2}px,${e.clientY - cur.offsetHeight/2}px)`);
-  document.querySelectorAll('a,button,.reel img,.phones img').forEach(el => {
-    el.addEventListener('mouseenter', () => cur.classList.add('big'));
-    el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+  document.querySelectorAll('.reel img,.phones img').forEach(el => el.dataset.cursor = 'Agrandir');
+  document.querySelectorAll('.morph').forEach(el => el.dataset.cursor = 'Robot');
+  document.querySelectorAll('a,button,[data-cursor]').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.dataset.label = el.dataset.cursor || ''; cur.classList.add('big'); });
+    el.addEventListener('mouseleave', () => { cur.classList.remove('big'); cur.dataset.label = ''; });
   });
+
+  // spotlight follows the pointer inside cards
+  document.querySelectorAll('.spot').forEach(c => c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', e.clientX - r.left + 'px'); c.style.setProperty('--my', e.clientY - r.top + 'px');
+  }));
+
+  // hero depth: layers drift at different speeds with the pointer
+  const hero = document.querySelector('.hero'), layers = [['.photo .frame', 10], ['.photo .ring', -18], ['.photo .badge', 26], ['.hero .intro', -6]]
+    .map(([sel, k]) => [document.querySelector(sel), k]);
+  hero.addEventListener('pointermove', e => {
+    const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+    layers.forEach(([el, k]) => el.style.translate = `${x * k}px ${y * k}px`);
+  });
+  hero.addEventListener('pointerleave', () => layers.forEach(([el]) => el.style.translate = ''));
   document.querySelectorAll('.mag').forEach(b => {
     b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`; });
     b.addEventListener('mouseleave', () => b.style.transform = '');
