@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mouldi Bouchami — Consultant Senior Power Platform</title>
+<meta name="description" content="Mouldi Bouchami, consultant senior et architecte Microsoft Power Platform & Dynamics 365. Créateur des jeux Elementa et Fais-moi confiance.">
+<meta property="og:title" content="Mouldi Bouchami — Consultant Senior Power Platform">
+<meta property="og:description" content="Architecte de solutions Power Platform & Dynamics 365. Créateur de jeux mobiles.">
+<meta property="og:image" content="img/mouldi.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230a0a0a'/><text x='50%' y='58%' text-anchor='middle' dominant-baseline='middle' font-family='Arial Black,Arial' font-weight='900' font-size='30' fill='%23ff3b2f'>MB</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Permanent+Marker&family=Exo+2:wght@700;800&display=swap">
+<style>
+:root{
+  --bg:#0a0a0a; --bg2:#121212; --line:#262626; --fg:#f2efe9; --mute:#9a958c;
+  --accent:#ff3b2f; --paper:#f6f4ee; --ink:#141414; --night:#141a3a; --gold:#ffc94d;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:400 17px/1.6 Manrope,system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+::selection{background:var(--accent);color:#fff}
+.mono{font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+section{padding:clamp(80px,12vw,160px) 0;position:relative}
+h2{font:800 clamp(2.4rem,7vw,5.5rem)/.95 Syne,sans-serif;letter-spacing:-.03em;margin:.4em 0 .5em}
+h2 em{font-style:normal;color:var(--accent)}
+
+/* grain */
+body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:100;opacity:.07;
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}}
+
+/* intro curtain */
+.curtain{position:fixed;inset:0;background:var(--accent);z-index:200;display:grid;place-items:center;
+  animation:lift 1s .9s var(--ease) forwards}
+.curtain span{font:800 clamp(3rem,12vw,9rem) Syne;color:var(--bg);animation:pop .8s var(--ease) both}
+@keyframes lift{to{transform:translateY(-100%)}}
+@keyframes pop{from{opacity:0;transform:scale(.6) rotate(-6deg)}}
+
+/* cursor */
+.cursor{position:fixed;left:0;top:0;width:38px;height:38px;border:1.5px solid var(--fg);border-radius:50%;
+  pointer-events:none;z-index:150;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,border-color .3s;mix-blend-mode:difference}
+.cursor.big{width:90px;height:90px;background:var(--fg);border-color:transparent}
+@media (hover:none){.cursor{display:none}}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:90;padding:18px 0;transition:background .4s,padding .4s}
+nav.solid{background:rgba(10,10,10,.75);backdrop-filter:blur(14px);padding:12px 0;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font:800 1.4rem Syne;text-decoration:none;letter-spacing:-.04em}
+.logo b{color:var(--accent)}
+nav ul{display:flex;gap:28px;list-style:none}
+nav ul a{text-decoration:none;font-size:.92rem;color:var(--mute);position:relative;transition:color .3s}
+nav ul a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+nav ul a:hover{color:var(--fg)} nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
+@media (max-width:760px){nav ul{display:none}}
+
+/* hero */
+.hero{min-height:100svh;display:grid;align-items:center;padding:120px 0 60px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero h1{font:800 clamp(2.6rem,7.2vw,8rem)/.9 Syne,sans-serif;letter-spacing:-.05em;margin:24px 0}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em;white-space:nowrap}
+@media (max-width:860px){.hero h1{font-size:clamp(2.2rem,10.5vw,6rem)}}
+.hero h1 .ch{display:inline-block;transform:translateY(110%);animation:up 1s var(--ease) forwards}
+.hero h1 .line:last-child{color:transparent;-webkit-text-stroke:2px var(--fg)}
+@keyframes up{to{transform:none}}
+.roles{height:1.6em;overflow:hidden;font:600 clamp(1.1rem,2.2vw,1.5rem) Syne}
+.roles div{animation:roll 9s var(--ease) infinite 2s}
+.roles p{height:1.6em}
+.roles p span{color:var(--accent)}
+@keyframes roll{0%,28%{transform:none}33%,61%{transform:translateY(-1.6em)}66%,94%{transform:translateY(-3.2em)}100%{transform:none}}
+.hero .lead{color:var(--mute);max-width:520px;margin-top:24px}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:99px;text-decoration:none;font-weight:600;
+  border:1px solid var(--fg);transition:background .3s,color .3s,transform .3s var(--ease)}
+.btn.fill{background:var(--fg);color:var(--bg)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.photo{position:relative;justify-self:center;width:min(440px,100%)}
+.photo .frame{position:relative;aspect-ratio:2/3;border-radius:220px 220px 24px 24px;overflow:hidden;
+  clip-path:inset(100% 0 0 0);animation:reveal 1.4s 1.4s var(--ease) forwards}
+.photo img{width:100%;height:100%;object-fit:cover;transform:scale(1.25);animation:zoom 2s 1.4s var(--ease) forwards;filter:contrast(1.08)}
+@keyframes reveal{to{clip-path:inset(0)}}
+@keyframes zoom{to{transform:scale(1.05)}}
+.photo .ring{position:absolute;inset:-28px;border:1px dashed var(--line);border-radius:250px 250px 40px 40px;animation:fade 1s 2.2s both}
+.badge{position:absolute;right:-18px;bottom:60px;width:130px;height:130px;animation:spin 14s linear infinite, fade 1s 2.4s both}
+.badge text{font:600 11px "JetBrains Mono";letter-spacing:3px;fill:var(--fg)}
+.badge circle{fill:var(--accent)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fade{from{opacity:0}}
+.scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll i{width:1px;height:50px;background:linear-gradient(var(--fg),transparent);animation:drip 2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.photo{order:-1;width:min(300px,80%)}.badge{width:100px;height:100px;right:-10px}.scroll{display:none}}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);padding:22px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
+.marquee .track{display:inline-flex;gap:48px;animation:slide 30s linear infinite;font:700 clamp(1.4rem,3vw,2.2rem) Syne}
+.marquee .track span:nth-child(even){color:var(--accent)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* about */
+.about .grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.about p.big{font:600 clamp(1.4rem,2.6vw,2.1rem)/1.3 Syne;letter-spacing:-.02em}
+.about p.big span{color:var(--mute)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden;align-self:start}
+.stat{background:var(--bg);padding:32px 24px}
+.stat b{display:block;font:800 clamp(2.6rem,5vw,4rem)/1 Syne;letter-spacing:-.04em}
+.stat b sup{color:var(--accent);font-size:.5em}
+@media (max-width:860px){.about .grid{grid-template-columns:1fr}}
+
+/* skills */
+.skills ol{list-style:none;counter-reset:s;border-top:1px solid var(--line)}
+.skills li{counter-increment:s;display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:16px;padding:26px 0;border-bottom:1px solid var(--line);
+  font:600 clamp(1.1rem,2.4vw,1.8rem) Syne;letter-spacing:-.02em;position:relative;overflow:hidden;transition:color .4s,padding .4s var(--ease)}
+.skills li::before{content:counter(s,decimal-leading-zero);font:500 .8rem "JetBrains Mono";color:var(--accent)}
+.skills li::after{content:"→";opacity:0;transform:translateX(-20px);transition:.4s var(--ease)}
+.skills li .bg{position:absolute;inset:0;background:var(--fg);transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease);z-index:-1}
+.skills li:hover{color:var(--bg);padding-left:20px}
+.skills li:hover .bg{transform:scaleY(1)}
+.skills li:hover::after{opacity:1;transform:none;margin-right:20px}
+.skills ol{position:relative;z-index:0}
+
+/* timeline */
+.timeline{position:relative;margin-top:40px}
+.timeline .rail{position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--line)}
+.timeline .rail i{position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(0)}
+.job{position:relative;padding:0 0 56px 56px}
+.job::before{content:"";position:absolute;left:4px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.job h3{font:700 clamp(1.3rem,2.6vw,2rem)/1.2 Syne;letter-spacing:-.02em;margin:6px 0 14px}
+.job ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.job li{border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;color:var(--mute)}
+.stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.stack span{padding:10px 18px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-weight:600}
+
+/* certifications */
+.certs{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;perspective:900px}
+.cert{border:1px solid var(--line);border-radius:20px;padding:28px 20px;background:linear-gradient(160deg,#1a1a1a,#0d0d0d);
+  transition:transform .2s,border-color .3s;transform-style:preserve-3d;min-height:230px;display:flex;flex-direction:column;justify-content:space-between}
+.cert:hover{border-color:var(--accent)}
+.cert b{font:800 clamp(1.5rem,2.4vw,2.2rem) Syne;letter-spacing:-.03em;transform:translateZ(40px);white-space:nowrap}
+.cert b small{display:block;font:500 .7rem "JetBrains Mono";letter-spacing:.14em;color:var(--accent);margin-bottom:6px}
+.cert p{font-size:.92rem;color:var(--mute);transform:translateZ(20px)}
+@media (max-width:980px){.certs{grid-template-columns:repeat(2,1fr)}.cert:last-child{grid-column:span 2}}
+
+/* games */
+.games-intro{max-width:720px}
+.game{border-radius:32px;overflow:hidden;margin-top:60px;position:relative}
+.game .head{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;padding:clamp(28px,5vw,64px);align-items:center}
+.game .facts{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}
+.game .facts span{padding:8px 16px;border-radius:99px;font-weight:600;font-size:.9rem}
+@media (max-width:860px){.game .head{grid-template-columns:1fr}}
+
+.fmc{background:var(--paper);color:var(--ink);
+  background-image:repeating-linear-gradient(transparent 0 31px,#dcd8cf 31px 32px);}
+.fmc::before{content:"";position:absolute;top:0;bottom:0;left:clamp(14px,4vw,48px);width:2px;background:#e8a5a0}
+.fmc h3{font:400 clamp(2.6rem,7vw,5rem)/.95 "Permanent Marker",cursive;transform:rotate(-2deg)}
+.fmc p{font-size:1.05rem}
+.fmc .facts span{border:2.5px solid var(--ink);background:#fff;font-family:"Permanent Marker";font-weight:400;transform:rotate(var(--r,0deg))}
+.fmc .door{justify-self:center;width:min(260px,70%);aspect-ratio:1/1.5;position:relative}
+.fmc .door .d{position:absolute;inset:10% 25% 0;border:4px solid var(--ink);background:#fff;transform-origin:left;transition:transform .6s var(--ease)}
+.fmc .door .d::after{content:"";position:absolute;left:10%;top:50%;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.fmc .door:hover .d{transform:perspective(600px) rotateY(-70deg)}
+.fmc .door{margin-top:70px}
+.fmc .door .bubble{position:absolute;bottom:93%;left:-10%;right:-10%;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:10px 14px;font-family:"Permanent Marker";font-size:.95rem;text-align:center;animation:bob 3s ease-in-out infinite}
+.fmc .door .run{position:absolute;bottom:0;left:-40%;font-size:2.4rem;animation:walk 5s linear infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(1deg)}}
+@keyframes walk{0%{transform:translateX(0)}70%{transform:translateX(220%)}71%,100%{transform:translateX(220%) translateY(400%);opacity:0}}
+.reel{overflow:hidden;padding:0 0 clamp(28px,5vw,56px);-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.reel .row{display:flex;gap:20px;width:max-content;animation:slide 50s linear infinite}
+.reel:hover .row{animation-play-state:paused}
+.reel img{height:clamp(160px,22vw,260px);border-radius:16px;cursor:zoom-in;transition:transform .4s var(--ease)}
+.reel img:hover{transform:scale(1.04) rotate(-1deg)}
+.fmc .reel img{border:3px solid var(--ink)}
+
+.elementa{background:radial-gradient(ellipse at 70% 0%,#2c3a7a,transparent 60%),linear-gradient(180deg,#1b2350,#0e1330);color:#fff}
+.elementa .stars{position:absolute;inset:0;pointer-events:none}
+.elementa .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle 3s infinite}
+@keyframes twinkle{50%{opacity:.15}}
+.elementa h3{font:800 clamp(2.8rem,8vw,5.6rem)/1 "Exo 2",sans-serif;letter-spacing:.12em;background:linear-gradient(#fff6e0,#e7d9b8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.elementa .sub{font:700 .85rem "Exo 2";letter-spacing:.35em;color:var(--gold)}
+.elementa p{color:#c9cdf0}
+.elementa .facts span{background:rgba(255,201,77,.12);border:1px solid rgba(255,201,77,.5);color:var(--gold)}
+.spark{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,#fff 30%,#ffe9b0 50%,transparent 70%);box-shadow:0 0 60px 20px rgba(255,220,140,.35);
+  margin-bottom:24px;animation:float 4s ease-in-out infinite;display:grid;place-items:center;font-size:1.8rem}
+@keyframes float{50%{transform:translateY(-14px)}}
+.phones{position:relative;height:clamp(340px,40vw,480px)}
+.phones img{position:absolute;left:50%;bottom:0;width:clamp(130px,15vw,190px);border-radius:22px;border:5px solid #0a0d22;box-shadow:0 30px 60px rgba(0,0,0,.5);
+  transform-origin:50% 120%;transition:transform .6s var(--ease);cursor:zoom-in}
+.phones img:nth-child(1){transform:translateX(-50%) rotate(-24deg)}
+.phones img:nth-child(2){transform:translateX(-50%) rotate(-8deg)}
+.phones img:nth-child(3){transform:translateX(-50%) rotate(8deg)}
+.phones img:nth-child(4){transform:translateX(-50%) rotate(24deg)}
+.phones:hover img:nth-child(1){transform:translateX(-50%) rotate(-34deg)}
+.phones:hover img:nth-child(2){transform:translateX(-50%) rotate(-12deg)}
+.phones:hover img:nth-child(3){transform:translateX(-50%) rotate(12deg)}
+.phones:hover img:nth-child(4){transform:translateX(-50%) rotate(34deg)}
+.elementa .reel img{border-radius:18px;border:3px solid rgba(255,255,255,.12)}
+
+/* langues */
+.langs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.lang{border:1px solid var(--line);border-radius:20px;padding:28px}
+.lang b{font:700 1.6rem Syne}
+.lang .bar{height:4px;background:var(--line);border-radius:4px;margin-top:18px;overflow:hidden}
+.lang .bar i{display:block;height:100%;background:var(--accent);width:var(--w);transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease) .3s}
+.in .lang .bar i,.lang.in .bar i{transform:scaleX(1)}
+@media (max-width:760px){.langs{grid-template-columns:1fr}}
+
+/* contact */
+.contact{text-align:center;overflow:hidden}
+.contact h2{font-size:clamp(3rem,12vw,10rem)}
+.contact .mail{display:inline-block;font:700 clamp(1.2rem,3.5vw,2.4rem) Syne;text-decoration:none;border-bottom:2px solid var(--accent);margin:20px 0 40px;word-break:break-all}
+.contact .btns{justify-content:center}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--mute);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(50px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
+/* lightbox */
+dialog{margin:auto;border:0;background:transparent;max-width:94vw;max-height:94vh}
+dialog::backdrop{background:rgba(0,0,0,.9);backdrop-filter:blur(6px)}
+dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .curtain{display:none}
+}
+</style>
+</head>
+<body>
+<div class="curtain" aria-hidden="true"><span>MB</span></div>
+<div class="cursor" aria-hidden="true"></div>
+
+<nav id="nav"><div class="wrap">
+  <a class="logo" href="#top">MB<b>.</b></a>
+  <ul>
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#certifs">Certifications</a></li>
+    <li><a href="#jeux">Jeux</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="mono" style="animation:fade 1s 1.6s both">● Disponible pour de nouveaux projets</p>
+      <h1 aria-label="Mouldi Bouchami"><span class="line" data-split>Mouldi</span><span class="line" data-split>Bouchami</span></h1>
+      <div class="roles" aria-label="Consultant Senior Power Platform, Architecte de solutions, Créateur de jeux">
+        <div>
+          <p>Consultant Senior <span>Power Platform</span></p>
+          <p>Architecte de <span>solutions</span></p>
+          <p>Créateur de <span>jeux mobiles</span></p>
+        </div>
+      </div>
+      <p class="lead">Plus de 10 ans à transformer des besoins métier en applications qui servent vraiment : Power Apps, Dynamics 365, Dataverse. Et le soir, je fabrique des jeux.</p>
+      <div class="btns">
+        <a class="btn fill mag" href="#parcours">Voir mon parcours ↓</a>
+        <a class="btn mag" href="#jeux">Mes jeux ✦</a>
+      </div>
+    </div>
+    <div class="photo" id="photo">
+      <div class="ring"></div>
+      <div class="frame"><img src="img/mouldi.jpg" alt="Portrait de Mouldi Bouchami en noir et blanc, lunettes aviateur" width="1024" height="1536"></div>
+      <svg class="badge" viewBox="0 0 130 130" aria-hidden="true">
+        <defs><path id="c" d="M65,65 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
+        <circle cx="65" cy="65" r="22"/>
+        <text><textPath href="#c">POWER PLATFORM · ARCHITECTE · DEV · </textPath></text>
+      </svg>
+    </div>
+  </div>
+  <div class="scroll mono"><i></i>scroll</div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>Power Apps</span><span>✦</span><span>Dynamics 365 Sales</span><span>✦</span><span>Dataverse</span><span>✦</span><span>Model-Driven Apps</span><span>✦</span><span>Canvas Apps</span><span>✦</span><span>Power Automate</span><span>✦</span><span>Godot</span><span>✦</span>
+  <span>Power Apps</span><span>✦</span><span>Dynamics 365 Sales</span><span>✦</span><span>Dataverse</span><span>✦</span><span>Model-Driven Apps</span><span>✦</span><span>Canvas Apps</span><span>✦</span><span>Power Automate</span><span>✦</span><span>Godot</span><span>✦</span>
+</div></div>
+
+<section class="about" id="apropos">
+  <div class="wrap">
+    <p class="mono rv">01 — À propos</p>
+    <h2 class="rv">Du besoin<br>à l'<em>application</em>.</h2>
+    <div class="grid">
+      <div class="rv">
+        <p class="big">J'écoute, je modélise, je construis. <span>Ateliers, prototypes, CRM, applications métier : j'accompagne chaque projet de l'idée jusqu'à la formation des utilisateurs.</span></p>
+        <p style="color:var(--mute);margin-top:28px">Consultant senior et architecte certifié Microsoft Power Platform, je conçois des solutions sur mesure autour de Dynamics 365 Sales, des Model-Driven Apps et des Canvas Apps. Mon terrain de jeu : comprendre un métier, le traduire en processus, puis en outils simples à utiliser. Créatif dans l'âme, j'applique la même rigueur à mes propres jeux mobiles.</p>
+      </div>
+      <div class="stats rv" style="--d:.15s">
+        <div class="stat"><b><span data-count="10">0</span><sup>+</sup></b><span class="mono">ans d'expérience</span></div>
+        <div class="stat"><b><span data-count="5">0</span></b><span class="mono">certifications Microsoft</span></div>
+        <div class="stat"><b><span data-count="3">0</span></b><span class="mono">langues parlées</span></div>
+        <div class="stat"><b><span data-count="2">0</span></b><span class="mono">jeux créés</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills">
+  <div class="wrap">
+    <p class="mono rv">02 — Compétences</p>
+    <h2 class="rv">Ce que je<br><em>fais</em> le mieux.</h2>
+    <ol class="rv">
+      <li><span class="bg"></span>Préparation et animation d'ateliers techniques</li>
+      <li><span class="bg"></span>Analyse et consolidation des besoins</li>
+      <li><span class="bg"></span>Modélisation des processus métier</li>
+      <li><span class="bg"></span>Configuration et paramétrage CRM</li>
+      <li><span class="bg"></span>Rédaction des spécifications techniques</li>
+      <li><span class="bg"></span>Études de faisabilité</li>
+      <li><span class="bg"></span>Pilotage de la recette métier</li>
+      <li><span class="bg"></span>Formation et conduite du changement</li>
+      <li><span class="bg"></span>Gestion de projet, suivi et reporting</li>
+    </ol>
+  </div>
+</section>
+
+<section id="parcours">
+  <div class="wrap">
+    <p class="mono rv">03 — Parcours</p>
+    <h2 class="rv">Projets<br><em>marquants</em>.</h2>
+    <div class="timeline" id="timeline">
+      <div class="rail"><i></i></div>
+      <article class="job rv">
+        <p class="mono">Dynamics 365 Sales · Power Platform</p>
+        <h3>Prototypage d'une application métier complémentaire à Dynamics 365 Sales</h3>
+        <ul><li>Qualification des exigences</li><li>Faisabilité</li><li>Prototypes</li><li>Accompagnement à la mise en œuvre</li><li>Formation Power Platform</li></ul>
+      </article>
+      <article class="job rv">
+        <p class="mono">Dynamics 365 Sales</p>
+        <h3>Mise en place d'un CRM de bout en bout</h3>
+        <ul><li>Étude de faisabilité</li><li>Conception des processus</li><li>Développement de personnalisations</li><li>Déploiement</li></ul>
+      </article>
+      <article class="job rv">
+        <p class="mono">Dynamics 365 Sales</p>
+        <h3>Personnalisation d'un CRM pour des besoins métier spécifiques</h3>
+        <ul><li>Analyse de viabilité</li><li>Schémas de processus</li><li>Fonctionnalités sur mesure</li><li>Intégration</li></ul>
+      </article>
+      <article class="job rv">
+        <p class="mono">Canvas App · Model-Driven App</p>
+        <h3>Application Canvas métier et Model-Driven App d'administration</h3>
+        <ul><li>Classification des exigences</li><li>Accompagnement des équipes</li><li>Développement</li></ul>
+      </article>
+      <article class="job rv">
+        <p class="mono">Model-Driven App · Dataverse</p>
+        <h3>Conception d'un système d'annuaire</h3>
+        <ul><li>Ateliers techniques</li><li>Développement</li><li>Mise en production</li></ul>
+      </article>
+    </div>
+    <div class="stack rv">
+      <span>Power Apps</span><span>Canvas Apps</span><span>Model-Driven Apps</span><span>Dataverse</span><span>Dynamics 365 Sales</span><span>Power Automate</span><span>Godot / GDScript</span>
+    </div>
+  </div>
+</section>
+
+<section id="certifs" style="background:var(--bg2)">
+  <div class="wrap">
+    <p class="mono rv">04 — Certifications</p>
+    <h2 class="rv">Certifié de<br>A à <em>Z</em>.</h2>
+    <div class="certs">
+      <div class="cert rv tilt"><b><small>Fundamentals</small>PL-900</b><p>Microsoft Power Platform Fundamentals</p></div>
+      <div class="cert rv tilt" style="--d:.08s"><b><small>Associate</small>PL-100</b><p>Power Platform App Maker</p></div>
+      <div class="cert rv tilt" style="--d:.16s"><b><small>Associate</small>PL-200</b><p>Power Platform Functional Consultant</p></div>
+      <div class="cert rv tilt" style="--d:.24s"><b><small>Associate</small>PL-400</b><p>Power Platform Developer</p></div>
+      <div class="cert rv tilt" style="--d:.32s;border-color:var(--accent)"><b><small>Expert</small>PL-600</b><p>Power Platform Solution Architect</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="jeux">
+  <div class="wrap">
+    <p class="mono rv">05 — Mes jeux</p>
+    <h2 class="rv">Quand le consultant<br>devient <em>game designer</em>.</h2>
+    <p class="games-intro rv" style="color:var(--mute)">Deux jeux mobiles conçus, écrits et développés de A à Z : un platformer piégé plein d'humour et un laboratoire de sciences et de maths pour apprendre en jouant.</p>
+
+    <article class="game fmc rv">
+      <div class="head">
+        <div>
+          <h3>Fais-moi confiance</h3>
+          <p style="margin-top:20px">Va jusqu'à la porte. Elle t'attend. Elle est gentille. Pourquoi est-ce qu'une porte mentirait&nbsp;? Un platformer piégé au style carnet d'écolier, où un stickman voyage de Paris à Gizeh, de New York à la Lune… et où rien n'est jamais ce qu'il prétend être.</p>
+          <div class="facts">
+            <span style="--r:-2deg">27 mondes</span><span style="--r:1.5deg">310 niveaux</span><span style="--r:-1deg">Android &amp; iPhone</span>
+          </div>
+          <a class="btn mag" href="https://maldini140786.github.io/" target="_blank" rel="noopener" style="border-color:var(--ink)">Découvrir le jeu ↗</a>
+        </div>
+        <div class="door" aria-hidden="true">
+          <div class="bubble">La porte est juste là. Enfin… en théorie.</div>
+          <div class="d"></div>
+          <div class="run">🏃</div>
+        </div>
+      </div>
+      <div class="reel"><div class="row">
+        <img src="img/fmc-titre.webp" alt="Écran titre de Fais-moi confiance" loading="lazy">
+        <img src="img/fmc-mondes.webp" alt="Choix des mondes : le Cahier, la Terre, l'Espace" loading="lazy">
+        <img src="img/fmc-paris.webp" alt="Niveau à Paris" loading="lazy">
+        <img src="img/fmc-gizeh.webp" alt="Niveau à Gizeh" loading="lazy">
+        <img src="img/fmc-newyork.webp" alt="Niveau à Central Park, New York" loading="lazy">
+        <img src="img/fmc-lune.webp" alt="Niveau sur la Lune" loading="lazy">
+        <img src="img/fmc-titre.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/fmc-mondes.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/fmc-paris.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/fmc-gizeh.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/fmc-newyork.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/fmc-lune.webp" alt="" loading="lazy" aria-hidden="true">
+      </div></div>
+    </article>
+
+    <article class="game elementa rv">
+      <div class="stars" id="stars"></div>
+      <div class="head" style="position:relative">
+        <div>
+          <div class="spark" aria-hidden="true"></div>
+          <h3>ELEMENTA</h3>
+          <p class="sub">LE LABORATOIRE OUBLIÉ</p>
+          <p style="margin-top:20px">Elementa, une petite étincelle d'énergie pure, est enfermée dans une capsule de verre. Pour la libérer, il faut réussir de vraies expériences : miroirs et prismes, circuits électriques, flammes colorées, résonance, fentes de Young… Et une deuxième aile, le Laboratoire des Nombres, pour les maths jusqu'à la 6ᵉ.</p>
+          <div class="facts">
+            <span>84 phénomènes scientifiques</span><span>48 notions de maths</span><span>22 mondes</span>
+          </div>
+        </div>
+        <div class="phones">
+          <img src="img/el-menu.webp" alt="Menu d'Elementa" loading="lazy">
+          <img src="img/el-carte.webp" alt="Carte du monde Optique et lumière" loading="lazy">
+          <img src="img/el-circuit.webp" alt="Salle Série ou parallèle" loading="lazy">
+          <img src="img/el-young.webp" alt="Salle Les fentes de Young" loading="lazy">
+        </div>
+      </div>
+      <div class="reel"><div class="row" style="animation-direction:reverse">
+        <img src="img/el-flammes.webp" alt="Salle Les flammes colorées" loading="lazy">
+        <img src="img/el-resonance.webp" alt="Salle La résonance" loading="lazy">
+        <img src="img/el-horloge.webp" alt="Salle Les heures pile" loading="lazy">
+        <img src="img/el-dessin.webp" alt="Salle Le dessin caché" loading="lazy">
+        <img src="img/el-circuit.webp" alt="Salle Série ou parallèle" loading="lazy">
+        <img src="img/el-young.webp" alt="Salle Les fentes de Young" loading="lazy">
+        <img src="img/el-flammes.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/el-resonance.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/el-horloge.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/el-dessin.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/el-circuit.webp" alt="" loading="lazy" aria-hidden="true">
+        <img src="img/el-young.webp" alt="" loading="lazy" aria-hidden="true">
+      </div></div>
+    </article>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="mono rv">06 — Langues</p>
+    <div class="langs" style="margin-top:28px">
+      <div class="lang rv"><b>Arabe</b><p class="mono">Langue maternelle</p><div class="bar"><i style="--w:100%"></i></div></div>
+      <div class="lang rv" style="--d:.1s"><b>Français</b><p class="mono">Courant</p><div class="bar"><i style="--w:95%"></i></div></div>
+      <div class="lang rv" style="--d:.2s"><b>Anglais</b><p class="mono">Courant</p><div class="bar"><i style="--w:85%"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact" style="background:var(--bg2)">
+  <div class="wrap">
+    <p class="mono rv">07 — Contact</p>
+    <h2 class="rv">Parlons<br><em>projet</em>.</h2>
+    <a class="mail rv" href="mailto:bmouldi@gmail.com">bmouldi@gmail.com</a>
+    <div class="btns rv">
+      <a class="btn fill mag" href="https://www.linkedin.com/in/mouldi-bouchami-235334a8/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn mag" href="mailto:bmouldi@gmail.com">M'écrire ✉</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>© <span id="y">2026</span> Mouldi Bouchami</span><span>Conçu et codé avec passion ✦</span></div></footer>
+
+<dialog id="lb"><img alt=""></dialog>
+
+<script>
+document.documentElement.classList.add('js');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('y').textContent = new Date().getFullYear();
+
+// split hero name into animated letters
+document.querySelectorAll('[data-split]').forEach((el, li) => {
+  el.innerHTML = [...el.textContent].map((c, i) =>
+    `<span class="ch" style="animation-delay:${1.5 + li * .15 + i * .04}s">${c}</span>`).join('');
+  el.setAttribute('aria-hidden', 'true');
+});
+
+// reveal on scroll + counters
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('[data-count]').forEach(n => {
+    const end = +n.dataset.count, t0 = performance.now();
+    const step = t => { const p = Math.min((t - t0) / 1400, 1); n.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  io.unobserve(e.target);
+}), { threshold: .15 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// nav background + timeline progress + photo parallax
+const nav = document.getElementById('nav'), tl = document.getElementById('timeline'), bar = tl.querySelector('.rail i'), photo = document.getElementById('photo');
+addEventListener('scroll', () => {
+  nav.classList.toggle('solid', scrollY > 40);
+  const r = tl.getBoundingClientRect(), p = (innerHeight * .6 - r.top) / r.height;
+  bar.style.transform = `scaleY(${Math.max(0, Math.min(1, p))})`;
+  if (!reduce && innerWidth > 860) photo.style.transform = `translateY(${scrollY * .12}px)`;
+}, { passive: true });
+
+// stars for Elementa
+const stars = document.getElementById('stars');
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('i');
+  s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;opacity:${.3+Math.random()*.7}`;
+  stars.appendChild(s);
+}
+
+// fine-pointer extras: custom cursor, magnetic buttons, tilt cards
+if (matchMedia('(hover:hover)').matches && !reduce) {
+  const cur = document.querySelector('.cursor');
+  addEventListener('mousemove', e => cur.style.transform = `translate(${e.clientX - cur.offsetWidth/2}px,${e.clientY - cur.offsetHeight/2}px)`);
+  document.querySelectorAll('a,button,.reel img,.phones img').forEach(el => {
+    el.addEventListener('mouseenter', () => cur.classList.add('big'));
+    el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+  });
+  document.querySelectorAll('.mag').forEach(b => {
+    b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`; });
+    b.addEventListener('mouseleave', () => b.style.transform = '');
+  });
+  document.querySelectorAll('.tilt').forEach(c => {
+    c.addEventListener('mousemove', e => { const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5; c.style.transform = `rotateY(${x*18}deg) rotateX(${-y*18}deg) translateY(-6px)`; });
+    c.addEventListener('mouseleave', () => c.style.transform = '');
+  });
+} else document.querySelector('.cursor').remove();
+
+// lightbox for screenshots
+const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
+document.querySelectorAll('.reel img,.phones img').forEach(img => img.addEventListener('click', () => { lbImg.src = img.src; lbImg.alt = img.alt; lb.showModal(); }));
+lb.addEventListener('click', () => lb.close());
+</script>
+</body>
+</html>
