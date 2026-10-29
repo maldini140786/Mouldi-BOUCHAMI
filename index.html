@@ -131,13 +131,34 @@ nav ul a:hover{color:var(--fg)} nav ul a:hover::after{transform:scaleX(1);transf
 .timeline{position:relative;margin-top:40px}
 .timeline .rail{position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--line)}
 .timeline .rail i{position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(0)}
-.job{position:relative;padding:0 0 56px 56px}
-.job::before{content:"";position:absolute;left:4px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
-.job h3{font:700 clamp(1.3rem,2.6vw,2rem)/1.2 Syne;letter-spacing:-.02em;margin:6px 0 14px}
-.job ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
-.job li{border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.88rem;color:var(--mute)}
-.stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.stack span{padding:10px 18px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font-weight:600}
+.job{position:relative;padding:0 0 72px 56px}
+.job::before{content:"";position:absolute;left:4px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);transition:background .4s}
+.job.in::before{background:var(--accent);box-shadow:0 0 0 6px rgba(255,59,47,.18)}
+.job .when{font:500 .8rem "JetBrains Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.job h3{font:700 clamp(1.4rem,2.8vw,2.2rem)/1.15 Syne;letter-spacing:-.02em;margin:8px 0 6px}
+.job .co{font-weight:600;margin-bottom:14px}
+.job .ctx{color:var(--mute);max-width:780px}
+.job .proj{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin:22px 0}
+.job .proj li{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:.95rem;line-height:1.45;transition:border-color .3s,transform .3s var(--ease)}
+.job .proj li:hover{border-color:var(--accent);transform:translateY(-4px)}
+.job .proj b{display:block;font:500 .7rem "JetBrains Mono";letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.job .env{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.job .env li{border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:.85rem;color:var(--mute)}
+
+/* stack */
+.stackgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.cat{border:1px solid var(--line);border-radius:20px;padding:26px;transition:border-color .3s}
+.cat:hover{border-color:#3a3a3a}
+.cat h3{font:700 1.3rem Syne;margin-bottom:16px}
+.cat h3 span{display:block;font:500 .72rem "JetBrains Mono";letter-spacing:.14em;color:var(--accent);margin-bottom:6px}
+.cat div{display:flex;flex-wrap:wrap;gap:8px}
+.cat div span{padding:7px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--line);font-size:.9rem;font-weight:500;transition:background .3s,color .3s,border-color .3s}
+.cat div span:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+
+/* formation */
+.edu{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:28px 0 56px}
+.edu div{border:1px solid var(--line);border-radius:20px;padding:28px}
+.edu b{display:block;font:700 1.35rem/1.25 Syne;margin:8px 0}
 
 /* certifications */
 .certs{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;perspective:900px}
@@ -147,7 +168,9 @@ nav ul a:hover{color:var(--fg)} nav ul a:hover::after{transform:scaleX(1);transf
 .cert b{font:800 clamp(1.5rem,2.4vw,2.2rem) Syne;letter-spacing:-.03em;transform:translateZ(40px);white-space:nowrap}
 .cert b small{display:block;font:500 .7rem "JetBrains Mono";letter-spacing:.14em;color:var(--accent);margin-bottom:6px}
 .cert p{font-size:.92rem;color:var(--mute);transform:translateZ(20px)}
-@media (max-width:980px){.certs{grid-template-columns:repeat(2,1fr)}.cert:last-child{grid-column:span 2}}
+.cert i{font:500 .72rem "JetBrains Mono";font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);margin-top:14px}
+@media (max-width:980px){.certs{grid-template-columns:repeat(2,minmax(0,1fr))}.cert:last-child{grid-column:span 2}}
+@media (max-width:560px){.cert{padding:22px 16px;min-height:200px}.cert b{font-size:5.5vw}}
 
 /* games */
 .games-intro{max-width:720px}
@@ -244,6 +267,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
   <ul>
     <li><a href="#apropos">À propos</a></li>
     <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#stack">Stack</a></li>
     <li><a href="#certifs">Certifications</a></li>
     <li><a href="#jeux">Jeux</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -282,8 +306,8 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 </header>
 
 <div class="marquee" aria-hidden="true"><div class="track">
-  <span>Power Apps</span><span>✦</span><span>Dynamics 365 Sales</span><span>✦</span><span>Dataverse</span><span>✦</span><span>Model-Driven Apps</span><span>✦</span><span>Canvas Apps</span><span>✦</span><span>Power Automate</span><span>✦</span><span>Godot</span><span>✦</span>
-  <span>Power Apps</span><span>✦</span><span>Dynamics 365 Sales</span><span>✦</span><span>Dataverse</span><span>✦</span><span>Model-Driven Apps</span><span>✦</span><span>Canvas Apps</span><span>✦</span><span>Power Automate</span><span>✦</span><span>Godot</span><span>✦</span>
+  <span>Power Apps</span><span>✦</span><span>Dynamics 365</span><span>✦</span><span>Dataverse</span><span>✦</span><span>Power Automate</span><span>✦</span><span>Power BI</span><span>✦</span><span>Model-Driven Apps</span><span>✦</span><span>Canvas Apps</span><span>✦</span><span>Azure</span><span>✦</span><span>C# / .NET</span><span>✦</span><span>Godot</span><span>✦</span>
+  <span>Power Apps</span><span>✦</span><span>Dynamics 365</span><span>✦</span><span>Dataverse</span><span>✦</span><span>Power Automate</span><span>✦</span><span>Power BI</span><span>✦</span><span>Model-Driven Apps</span><span>✦</span><span>Canvas Apps</span><span>✦</span><span>Azure</span><span>✦</span><span>C# / .NET</span><span>✦</span><span>Godot</span><span>✦</span>
 </div></div>
 
 <section class="about" id="apropos">
@@ -292,8 +316,8 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
     <h2 class="rv">Du besoin<br>à l'<em>application</em>.</h2>
     <div class="grid">
       <div class="rv">
-        <p class="big">J'écoute, je modélise, je construis. <span>Ateliers, prototypes, CRM, applications métier : j'accompagne chaque projet de l'idée jusqu'à la formation des utilisateurs.</span></p>
-        <p style="color:var(--mute);margin-top:28px">Tech lead et architecte certifié Microsoft Power Platform, je conçois des solutions sur mesure autour de Dynamics 365 Sales, des Model-Driven Apps et des Canvas Apps. Mon terrain de jeu : comprendre un métier, le traduire en processus, puis en outils simples à utiliser. Créatif dans l'âme, j'applique la même rigueur à mes propres jeux mobiles.</p>
+        <p class="big">J'écoute, je modélise, je construis. <span>Ateliers, prototypes, CRM, applications métier : j'accompagne chaque projet de l'idée jusqu'à la mise en production.</span></p>
+        <p style="color:var(--mute);margin-top:28px">Ingénieur en génie logiciel, j'ai commencé par la Business Intelligence avant de me spécialiser sur Microsoft Power Platform et Dynamics 365. Aujourd'hui tech lead et architecte certifié, je conçois des CRM, des applications métier et des automatisations, je mets en place la gouvernance Power Platform et j'accompagne les équipes jusqu'à l'autonomie. Créatif dans l'âme, j'applique la même rigueur à mes propres jeux mobiles.</p>
       </div>
       <div class="stats rv" style="--d:.15s">
         <div class="stat"><b><span data-count="10">0</span><sup>+</sup></b><span class="mono">ans d'expérience</span></div>
@@ -307,18 +331,18 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section class="skills">
   <div class="wrap">
-    <p class="mono rv">02 — Compétences</p>
+    <p class="mono rv">02 — Savoir-faire</p>
     <h2 class="rv">Ce que je<br><em>fais</em> le mieux.</h2>
     <ol class="rv">
-      <li><span class="bg"></span>Préparation et animation d'ateliers techniques</li>
-      <li><span class="bg"></span>Analyse et consolidation des besoins</li>
-      <li><span class="bg"></span>Modélisation des processus métier</li>
-      <li><span class="bg"></span>Configuration et paramétrage CRM</li>
-      <li><span class="bg"></span>Rédaction des spécifications techniques</li>
-      <li><span class="bg"></span>Études de faisabilité</li>
-      <li><span class="bg"></span>Pilotage de la recette métier</li>
+      <li><span class="bg"></span>Architecture de solutions Power Platform</li>
+      <li><span class="bg"></span>Lead technique, support et coaching d'équipe</li>
+      <li><span class="bg"></span>Prototypage et création d'applications métier</li>
+      <li><span class="bg"></span>Implémentation et personnalisation de CRM Dynamics 365</li>
+      <li><span class="bg"></span>Automatisation des processus et des flux</li>
+      <li><span class="bg"></span>Gouvernance Power Platform</li>
+      <li><span class="bg"></span>Reprise et migration de données</li>
+      <li><span class="bg"></span>Ateliers, analyse des besoins et spécifications</li>
       <li><span class="bg"></span>Formation et conduite du changement</li>
-      <li><span class="bg"></span>Gestion de projet, suivi et reporting</li>
     </ol>
   </div>
 </section>
@@ -326,58 +350,105 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 <section id="parcours">
   <div class="wrap">
     <p class="mono rv">03 — Parcours</p>
-    <h2 class="rv">Projets<br><em>marquants</em>.</h2>
+    <h2 class="rv">Dix ans,<br>quatre <em>chapitres</em>.</h2>
     <div class="timeline" id="timeline">
       <div class="rail"><i></i></div>
+
       <article class="job rv">
-        <p class="mono">Dynamics 365 Sales · Power Platform</p>
-        <h3>Prototypage d'une application métier complémentaire à Dynamics 365 Sales</h3>
-        <ul><li>Qualification des exigences</li><li>Faisabilité</li><li>Prototypes</li><li>Accompagnement à la mise en œuvre</li><li>Formation Power Platform</li></ul>
+        <p class="when">Depuis août 2023</p>
+        <h3>Tech Lead Dynamics CRM &amp; Power Platform</h3>
+        <p class="co">Javista</p>
+        <p class="ctx">Au sein de l'équipe Power Platform : prototypage et création d'applications métier, automatisation de flux, support technique, développement et coaching de l'équipe, jusqu'à la mise en production.</p>
+        <ul class="proj">
+          <li><b>CRM</b>Implémentation et personnalisation de CRM Dynamics 365 Sales, avec reprise de données</li>
+          <li><b>Gouvernance</b>Mise en place d'une gouvernance Power Platform et coaching des équipes</li>
+          <li><b>Model-Driven App</b>Gestion d'annuaire et envoi de courriels, avec migration des données</li>
+          <li><b>Canvas Apps</b>Matrices de criticité avec intégration des données SharePoint</li>
+          <li><b>Évolutions</b>Évolutions de plusieurs applications Canvas et Model-Driven en production</li>
+          <li><b>Formation</b>Formations Power Apps, accompagnement et optimisation des flux automatisés</li>
+        </ul>
+        <ul class="env"><li>Power Platform</li><li>Dynamics 365 Sales</li><li>JavaScript</li><li>C#</li><li>SQL</li></ul>
       </article>
+
       <article class="job rv">
-        <p class="mono">Dynamics 365 Sales</p>
-        <h3>Mise en place d'un CRM de bout en bout</h3>
-        <ul><li>Étude de faisabilité</li><li>Conception des processus</li><li>Développement de personnalisations</li><li>Déploiement</li></ul>
+        <p class="when">Juillet 2018 — juin 2023</p>
+        <h3>Ingénieur Développement &amp; Lead Technique Power Platform</h3>
+        <p class="co">Biware · filiale innovation</p>
+        <p class="ctx">Conception de prototypes de solutions opérationnelles complètes, transformés en applications : couches applicatives sur mobile, tablette et PC, workflows et règles métier, restitution et analyse des données.</p>
+        <ul class="proj">
+          <li><b>Finance</b>Application opérationnelle de gestion de crédit</li>
+          <li><b>Commercial</b>Application d'animation commerciale et de gestion du recouvrement</li>
+          <li><b>Data</b>Entrepôt de données moderne et reporting innovant autour de Dynamics 365</li>
+          <li><b>Finance</b>Application d'analyse des demandes de crédit</li>
+          <li><b>Cloud</b>Administration des plateformes cloud et Azure</li>
+          <li><b>Équipe</b>Support technique et coaching de l'équipe</li>
+        </ul>
+        <ul class="env"><li>Power Platform</li><li>Azure Web App</li><li>SQL</li><li>Python</li></ul>
       </article>
+
       <article class="job rv">
-        <p class="mono">Dynamics 365 Sales</p>
-        <h3>Personnalisation d'un CRM pour des besoins métier spécifiques</h3>
-        <ul><li>Analyse de viabilité</li><li>Schémas de processus</li><li>Fonctionnalités sur mesure</li><li>Intégration</li></ul>
+        <p class="when">Juillet 2017 — juin 2018</p>
+        <h3>Consultant BI</h3>
+        <p class="co">Biware · en partenariat avec un intégrateur britannique</p>
+        <p class="ctx">Applications terrain et reporting décisionnel autour de Dynamics 365 Field Service pour des clients au Royaume-Uni.</p>
+        <ul class="proj">
+          <li><b>Field Service</b>Suivi du déploiement de la fibre optique dans 200 sites patrimoniaux</li>
+          <li><b>Hors ligne</b>Application offline de suivi des stocks promotionnels en aéroports</li>
+          <li><b>RH</b>Gestion des heures de travail, heures supplémentaires et congés</li>
+        </ul>
+        <ul class="env"><li>Power Apps</li><li>Power Automate</li><li>Power BI</li></ul>
       </article>
+
       <article class="job rv">
-        <p class="mono">Canvas App · Model-Driven App</p>
-        <h3>Application Canvas métier et Model-Driven App d'administration</h3>
-        <ul><li>Classification des exigences</li><li>Accompagnement des équipes</li><li>Développement</li></ul>
-      </article>
-      <article class="job rv">
-        <p class="mono">Model-Driven App · Dataverse</p>
-        <h3>Conception d'un système d'annuaire</h3>
-        <ul><li>Ateliers techniques</li><li>Développement</li><li>Mise en production</li></ul>
+        <p class="when">Janvier 2015 — juin 2017</p>
+        <h3>Analyste Développeur Business Intelligence</h3>
+        <p class="co">Aziza · Groupe Slama, Tunisie</p>
+        <p class="ctx">Renfort de l'équipe IT d'une enseigne de supermarchés en pleine expansion, pour maintenir et faire évoluer le système décisionnel : des analyses fiables, précises et prêtes à temps.</p>
+        <ul class="proj">
+          <li><b>Temps réel</b>Monitoring de l'état des meubles frais en magasin</li>
+          <li><b>Qualité</b>Indicateurs d'hygiène et gestion des dates de consommation</li>
+          <li><b>Finance</b>Traçabilité des recettes magasins et gestion des écarts</li>
+          <li><b>Pilotage</b>Suivi des ventes, des commandes, des stocks et des marges</li>
+        </ul>
+        <ul class="env"><li>SQL</li><li>Oracle</li><li>SSIS</li><li>Cognos</li><li>QlikView</li><li>ERP</li></ul>
       </article>
     </div>
-    <div class="stack rv">
-      <span>Power Apps</span><span>Canvas Apps</span><span>Model-Driven Apps</span><span>Dataverse</span><span>Dynamics 365 Sales</span><span>Power Automate</span><span>Godot / GDScript</span>
+  </div>
+</section>
+
+<section id="stack" style="padding-top:0">
+  <div class="wrap">
+    <p class="mono rv">04 — Stack technique</p>
+    <h2 class="rv">Ma <em>boîte</em><br>à outils.</h2>
+    <div class="stackgrid">
+      <div class="cat rv"><h3><span>01</span>Power Platform &amp; Dynamics</h3><div><span>Power Apps Canvas</span><span>Model-Driven Apps</span><span>Power Automate</span><span>Power BI</span><span>Power Virtual Agents</span><span>AI Builder</span><span>Dynamics 365 Sales</span><span>Field Service</span></div></div>
+      <div class="cat rv" style="--d:.08s"><h3><span>02</span>Données</h3><div><span>Dataverse</span><span>Dataverse for Teams</span><span>SharePoint</span><span>SQL Server</span><span>Oracle</span><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span></div></div>
+      <div class="cat rv" style="--d:.16s"><h3><span>03</span>Décisionnel</h3><div><span>Power BI</span><span>SSIS / SSDT</span><span>QlikView</span><span>Cognos</span><span>Data Vault</span></div></div>
+      <div class="cat rv"><h3><span>04</span>Microsoft Azure</h3><div><span>Synapse</span><span>Data Factory</span><span>Web Apps</span><span>PaaS / SaaS</span></div></div>
+      <div class="cat rv" style="--d:.08s"><h3><span>05</span>Langages</h3><div><span>C# / .NET</span><span>JavaScript</span><span>Java</span><span>Python</span><span>SQL</span><span>HTML / CSS</span></div></div>
+      <div class="cat rv" style="--d:.16s"><h3><span>06</span>Méthodes</h3><div><span>Agile</span><span>DevOps</span><span>UML</span><span>Gouvernance Power Platform</span><span>Godot (jeux)</span></div></div>
     </div>
   </div>
 </section>
 
 <section id="certifs" style="background:var(--bg2)">
   <div class="wrap">
-    <p class="mono rv">04 — Certifications</p>
+    <p class="mono rv">05 — Certifications</p>
     <h2 class="rv">Certifié de<br>A à <em>Z</em>.</h2>
+    <p class="rv" style="color:var(--mute);margin:-20px 0 40px">Les 5 certifications Power Platform, obtenues en 7 mois.</p>
     <div class="certs">
-      <div class="cert rv tilt"><b><small>Fundamentals</small>PL-900</b><p>Microsoft Power Platform Fundamentals</p></div>
-      <div class="cert rv tilt" style="--d:.08s"><b><small>Associate</small>PL-100</b><p>Power Platform App Maker</p></div>
-      <div class="cert rv tilt" style="--d:.16s"><b><small>Associate</small>PL-200</b><p>Power Platform Functional Consultant</p></div>
-      <div class="cert rv tilt" style="--d:.24s"><b><small>Associate</small>PL-400</b><p>Power Platform Developer</p></div>
-      <div class="cert rv tilt" style="--d:.32s;border-color:var(--accent)"><b><small>Expert</small>PL-600</b><p>Power Platform Solution Architect</p></div>
+      <div class="cert rv tilt"><b><small>Fundamentals</small>PL-900</b><p>Microsoft Power Platform Fundamentals</p><i>Déc. 2020</i></div>
+      <div class="cert rv tilt" style="--d:.08s"><b><small>Associate</small>PL-100</b><p>Power Platform App Maker</p><i>Fév. 2021</i></div>
+      <div class="cert rv tilt" style="--d:.16s"><b><small>Associate</small>PL-200</b><p>Power Platform Functional Consultant</p><i>Fév. 2021</i></div>
+      <div class="cert rv tilt" style="--d:.24s"><b><small>Associate</small>PL-400</b><p>Power Platform Developer</p><i>Fév. 2021</i></div>
+      <div class="cert rv tilt" style="--d:.32s;border-color:var(--accent)"><b><small>Expert</small>PL-600</b><p>Power Platform Solution Architect</p><i>Juil. 2021</i></div>
     </div>
   </div>
 </section>
 
 <section id="jeux">
   <div class="wrap">
-    <p class="mono rv">05 — Mes jeux</p>
+    <p class="mono rv">06 — Mes jeux</p>
     <h2 class="rv">Quand le tech lead<br>devient <em>game designer</em>.</h2>
     <p class="games-intro rv" style="color:var(--mute)">Deux jeux mobiles conçus, écrits et développés de A à Z : un platformer piégé plein d'humour et un laboratoire de sciences et de maths pour apprendre en jouant.</p>
 
@@ -452,8 +523,12 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section style="padding-top:0">
   <div class="wrap">
-    <p class="mono rv">06 — Langues</p>
-    <div class="langs" style="margin-top:28px">
+    <p class="mono rv">07 — Formation &amp; langues</p>
+    <div class="edu">
+      <div class="rv"><p class="mono">2011 — 2014</p><b>Diplôme national d'ingénieur en génie logiciel</b><p style="color:var(--mute)">ESPRIT</p></div>
+      <div class="rv" style="--d:.1s"><p class="mono">2007 — 2011</p><b>Maîtrise en informatique appliquée à la gestion</b><p style="color:var(--mute)">FSEGT</p></div>
+    </div>
+    <div class="langs">
       <div class="lang rv"><b>Arabe</b><p class="mono">Langue maternelle</p><div class="bar"><i style="--w:100%"></i></div></div>
       <div class="lang rv" style="--d:.1s"><b>Français</b><p class="mono">Courant</p><div class="bar"><i style="--w:95%"></i></div></div>
       <div class="lang rv" style="--d:.2s"><b>Anglais</b><p class="mono">Courant</p><div class="bar"><i style="--w:85%"></i></div></div>
@@ -463,7 +538,7 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section class="contact" id="contact" style="background:var(--bg2)">
   <div class="wrap">
-    <p class="mono rv">07 — Contact</p>
+    <p class="mono rv">08 — Contact</p>
     <h2 class="rv">Parlons<br><em>projet</em>.</h2>
     <a class="mail rv" href="mailto:bmouldi@gmail.com">bmouldi@gmail.com</a>
     <div class="btns rv">
