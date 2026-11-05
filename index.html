@@ -948,7 +948,6 @@ if (matchMedia('(hover:hover)').matches && !reduce) {
   const cur = document.querySelector('.cursor');
   addEventListener('mousemove', e => cur.style.transform = `translate(${e.clientX - cur.offsetWidth/2}px,${e.clientY - cur.offsetHeight/2}px)`);
   document.querySelectorAll('.reel img,.phones img').forEach(el => el.dataset.cursor = 'Agrandir');
-  document.querySelectorAll('.morph').forEach(el => el.dataset.cursor = 'Robot');
   document.querySelectorAll('a,button,[data-cursor]').forEach(el => {
     el.addEventListener('mouseenter', () => { cur.dataset.label = el.dataset.cursor || ''; cur.classList.add('big'); });
     el.addEventListener('mouseleave', () => { cur.classList.remove('big'); cur.dataset.label = ''; });
