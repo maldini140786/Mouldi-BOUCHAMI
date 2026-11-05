@@ -406,17 +406,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .js .rv{opacity:0;transform:translateY(50px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
 .js .rv.in{opacity:1;transform:none}
 
-/* robot reveal: a wavy circle that follows the pointer (or a finger tap) */
-.morph .robot{position:absolute;inset:0;pointer-events:none;opacity:0;
-  --m:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 calc(var(--r,0px) - 22px),rgba(0,0,0,.45) calc(var(--r,0px) - 13px),#000 calc(var(--r,0px) - 5px),transparent var(--r,0px),rgba(0,0,0,.45) calc(var(--r,0px) + 9px),transparent calc(var(--r,0px) + 18px),rgba(0,0,0,.22) calc(var(--r,0px) + 28px),transparent calc(var(--r,0px) + 38px));
-  -webkit-mask-image:var(--m);mask-image:var(--m)}
-.morph.on .robot{opacity:1}
-.morph .edge{position:absolute;left:var(--x,50%);top:var(--y,50%);width:calc(var(--r,0px) * 2);height:calc(var(--r,0px) * 2);transform:translate(-50%,-50%);
-  border-radius:50%;border:1.5px solid rgba(130,225,255,.85);box-shadow:0 0 22px rgba(80,200,255,.55),inset 0 0 22px rgba(80,200,255,.35);pointer-events:none;opacity:0;z-index:2}
-.morph.on .edge{opacity:1}
-.ripple{position:absolute;width:var(--d);height:var(--d);transform:translate(-50%,-50%) scale(0);border-radius:50%;border:2px solid rgba(130,225,255,.9);
-  box-shadow:0 0 18px rgba(80,200,255,.7);pointer-events:none;z-index:2;animation:ripple 1.2s var(--ease) forwards}
-@keyframes ripple{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+/* robot reveal: smoke dissolves the photo and uncovers the robot behind it */
+.morph .smoke{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 .hint{position:absolute;left:50%;transform:translateX(-50%);z-index:3;padding:6px 12px;border-radius:99px;background:rgba(10,10,10,.6);backdrop-filter:blur(6px);
   border:1px solid rgba(130,225,255,.4);color:#bfefff;white-space:nowrap;pointer-events:none;transition:opacity .5s;font-size:.75rem}
 .hint::before{content:"◎ Survole la photo"}
@@ -444,12 +435,6 @@ h2 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14
 .cert.spot{transition:--sa .35s,transform .2s,border-color .3s}
 .cert.spot{background-image:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) var(--sa),transparent),transparent 45%),linear-gradient(160deg,var(--cert1),var(--cert2))}
 
-/* scroll-linked scan: the photo turns into the robot as it travels up the screen */
-.morph .scan{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;clip-path:inset(0 0 calc(100% - var(--p,0) * 100%) 0)}
-.morph .scanline{position:absolute;left:0;right:0;top:calc(var(--p,0) * 100%);height:2px;background:#8fe6ff;box-shadow:0 0 18px 4px rgba(80,200,255,.65);pointer-events:none;z-index:2;opacity:calc(var(--p,0) * (1 - var(--p,0)) * 4)}
-.interlude blockquote .day{opacity:calc(1 - var(--p,0) * .7)}
-.interlude blockquote .night{opacity:calc(.3 + var(--p,0) * .7)}
-@media (prefers-reduced-motion:reduce){.interlude blockquote .day,.interlude blockquote .night{opacity:1}}
 
 /* cursor label */
 .cursor::after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;font:600 .62rem "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:#000;opacity:0;transition:opacity .2s}
@@ -511,10 +496,9 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
     </div>
     <div class="photo" id="photo">
       <div class="ring"></div>
-      <div class="frame morph">
+      <div class="frame morph" data-robot="img/mouldi-robot.webp">
         <img src="img/mouldi.webp" alt="Portrait de Mouldi Bouchami en noir et blanc, lunettes aviateur" width="1024" height="1536">
-        <img class="robot" src="img/mouldi-robot.webp" alt="" aria-hidden="true" width="1024" height="1536">
-        <i class="edge"></i>
+        <canvas class="smoke" aria-hidden="true"></canvas>
         <span class="hint mono" style="bottom:22px"></span>
       </div>
       <svg class="badge" viewBox="0 0 130 130" aria-hidden="true">
@@ -760,12 +744,9 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 <section class="interlude">
   <div class="wrap">
     <figure class="ph rv">
-      <div class="clip morph">
+      <div class="clip morph" data-robot="img/mouldi-jeux-robot.webp">
         <img src="img/mouldi-jeux.webp" alt="Mouldi Bouchami assis sur un pouf, en sweat noir et baskets blanches" width="1024" height="1536">
-        <img class="scan" src="img/mouldi-jeux-robot.webp" alt="" aria-hidden="true" width="1024" height="1536">
-        <i class="scanline"></i>
-        <img class="robot" src="img/mouldi-jeux-robot.webp" alt="" aria-hidden="true" width="1024" height="1536" loading="lazy">
-        <i class="edge"></i>
+        <canvas class="smoke" aria-hidden="true"></canvas>
         <span class="hint mono" style="top:18px"></span>
         <span class="tag mono" id="tag" style="color:#f2efe9">Off duty ✦</span>
       </div>
@@ -940,19 +921,8 @@ addEventListener('scroll', () => {
   const r = tl.getBoundingClientRect(), p = (innerHeight * .6 - r.top) / r.height;
   bar.style.transform = `scaleY(${Math.max(0, Math.min(1, p))})`;
   if (!reduce && innerWidth > 860) photo.style.transform = `translateY(${scrollY * .12}px)`;
-  if (!reduce) { scrub(); lean(); }
+  if (!reduce) lean();
 }, { passive: true });
-
-// interlude: the photo is scanned into the robot while it moves up the screen
-const inter = document.querySelector('.interlude'), fig = inter.querySelector('.ph'), tag = document.getElementById('tag');
-function scrub() {
-  const r = fig.getBoundingClientRect();
-  const p = Math.max(0, Math.min(1, (innerHeight * .9 - r.top) / (r.height + innerHeight * .5))); // about half robot when centred
-  inter.style.setProperty('--p', p.toFixed(3));
-  tag.textContent = p > .5 ? 'Mode robot ●' : 'Off duty ✦';
-}
-
-if (!reduce) scrub();
 
 // marquee leans with scroll speed, then settles
 const marquee = document.querySelector('.marquee');
@@ -1008,44 +978,6 @@ if (matchMedia('(hover:hover)').matches && !reduce) {
   });
 } else document.querySelector('.cursor').remove();
 
-// robot reveal on both photos: hover follows the pointer, a click or tap sends a full wave
-document.querySelectorAll('.morph').forEach(box => {
-  let r = 0, target = 0, hovering = false, raf = 0, timer;
-  const set = (k, v) => box.style.setProperty(k, v);
-  const at = e => { const b = box.getBoundingClientRect(); set('--x', e.clientX - b.left + 'px'); set('--y', e.clientY - b.top + 'px'); return b; };
-  const tick = () => {
-    r += (target - r) * .12;
-    const wobble = reduce || r < 2 ? 0 : Math.sin(performance.now() / 110) * 4;
-    set('--r', Math.max(0, r + wobble) + 'px');
-    box.classList.toggle('on', r > 1);
-    raf = Math.abs(target - r) > .5 || target > 0 ? requestAnimationFrame(tick) : 0;
-    if (!raf) { box.classList.remove('on'); set('--r', '0px'); }
-  };
-  const go = () => { if (!raf) raf = requestAnimationFrame(tick); };
-  const ripples = (x, y, d) => [0, 160, 320].forEach(delay => setTimeout(() => {
-    const w = document.createElement('i');
-    w.className = 'ripple'; w.style.cssText = `left:${x}px;top:${y}px;--d:${d}px`;
-    box.appendChild(w); w.addEventListener('animationend', () => w.remove());
-  }, delay));
-  const burst = e => {
-    const b = at(e), full = Math.hypot(b.width, b.height);
-    box.classList.add('used');
-    ripples(e.clientX - b.left, e.clientY - b.top, full * 2);
-    target = full; go();
-    clearTimeout(timer);
-    timer = setTimeout(() => { target = hovering ? 120 : 0; go(); }, 1800);
-  };
-  box.addEventListener('pointerenter', e => {
-    if (e.pointerType === 'touch') return;
-    hovering = true; box.classList.add('used');
-    const b = at(e); ripples(e.clientX - b.left, e.clientY - b.top, 260);
-    target = 120; go();
-  });
-  box.addEventListener('pointermove', e => { if (e.pointerType !== 'touch') at(e); });
-  box.addEventListener('pointerleave', e => { if (e.pointerType === 'touch') return; hovering = false; clearTimeout(timer); target = 0; go(); });
-  box.addEventListener('click', burst); // a tap on a phone, so scrolling over the photo never triggers it
-});
-
 // light / dark switch, revealed as a circle growing from the switch
 const root = document.documentElement, tbtn = document.getElementById('theme');
 const syncTheme = () => { const light = root.dataset.theme === 'light'; tbtn.setAttribute('aria-checked', light); tbtn.setAttribute('aria-label', light ? 'Mode sombre' : 'Mode clair'); };
@@ -1081,6 +1013,139 @@ document.querySelectorAll('.demo .viz, .reel, .marquee, .elementa .stars, .fmc .
 const lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
 document.querySelectorAll('.reel img,.phones img').forEach(img => img.addEventListener('click', () => { lbImg.src = img.src; lbImg.alt = img.alt; lb.showModal(); }));
 lb.addEventListener('click', () => lb.close());
+</script>
+<script type="module">
+// robot reveal on both photos: a vapour follows the pointer and dissolves the photo,
+// uncovering the robot behind it; a click or tap fills the whole photo with smoke.
+// Drawn by a three.js shader, loaded only when a photo comes near the screen.
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const FRAG = `
+precision highp float;
+uniform sampler2D robot, trail;
+uniform float time, aspect;
+uniform vec2 cover;
+varying vec2 vUv;
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
+  return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+}
+float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 5; i++) { v += a * noise(p); p = p * 2.03 + 7.1; a *= .5; } return v; }
+void main(){
+  vec2 p = vec2(vUv.x * aspect, vUv.y) * 3.;
+  // smoke rises and curls: the noise is warped by itself
+  vec2 q = vec2(fbm(p + vec2(0., -time * .35)), fbm(p + vec2(5.2, 1.3 - time * .3)));
+  float n = fbm(p + q * 1.6 + vec2(0., -time * .5));
+  float t = texture2D(trail, vUv + (q - .5) * .06).r;
+  float edge = t + (n - .5) * .7;
+  float reveal = smoothstep(.42, .62, edge);
+  // vapour sits around the opening and fades into thin wisps
+  float wisps = smoothstep(.08, .4, edge) * smoothstep(.0, .18, t) * (1. - reveal * .85) * (.35 + n * .9);
+  vec2 ruv = (vUv - .5) * cover + .5 + (q - .5) * .015 * (1. - reveal);
+  vec3 bot = texture2D(robot, ruv).rgb;
+  vec3 haze = mix(vec3(.62, .78, .86), vec3(.86, .95, 1.), n);
+  float a = clamp(reveal + wisps * .8, 0., 1.);
+  vec3 col = bot * reveal + haze * wisps * .8 + vec3(.35, .8, 1.) * smoothstep(.36, .46, edge) * smoothstep(.0, .18, t) * (1. - reveal) * .15;
+  gl_FragColor = vec4(col, a);
+}`;
+
+let THREE;
+const loadThree = () => THREE ? Promise.resolve(THREE) : import('./vendor/three.module.min.js').then(m => THREE = m);
+
+document.querySelectorAll('.morph').forEach(box => {
+  const tag = box.querySelector('#tag'), cv = box.querySelector('.smoke');
+  let started = false, hover = null, last = null, energy = 0, raf = 0, burst = null;
+
+  // fallback (reduced motion or no WebGL): a plain cross-fade to the robot
+  const fadeMode = () => {
+    const img = new Image(); img.src = box.dataset.robot; img.alt = ''; img.setAttribute('aria-hidden', 'true');
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;pointer-events:none;z-index:2';
+    cv.replaceWith(img);
+    const show = on => { img.style.opacity = on ? 1 : 0; if (tag) tag.textContent = on ? 'Mode robot ●' : 'Off duty ✦'; };
+    box.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') { box.classList.add('used'); show(true); } });
+    box.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') show(false); });
+    box.addEventListener('click', () => { box.classList.add('used'); show(img.style.opacity !== '1'); });
+  };
+  if (still || !window.WebGLRenderingContext) return fadeMode();
+
+  // trail: a small grey-scale map of where the pointer has been, fading over time
+  const tc = document.createElement('canvas'), tx = tc.getContext('2d');
+  tc.width = 96; tc.height = 144;
+  tx.fillStyle = '#000'; tx.fillRect(0, 0, 96, 144);
+  const dab = (x, y, r, a) => {
+    const g = tx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, `rgba(255,255,255,${a})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+    tx.globalCompositeOperation = 'lighter'; tx.fillStyle = g; tx.fillRect(x - r, y - r, r * 2, r * 2);
+    tx.globalCompositeOperation = 'source-over';
+  };
+  const at = e => { const b = box.getBoundingClientRect(); return { x: (e.clientX - b.left) / b.width * 96, y: (e.clientY - b.top) / b.height * 144 }; };
+
+  let renderer, mat, trailTex, clock;
+  const start = () => {
+    if (started) return; started = true;
+    loadThree().then(() => {
+      try { renderer = new THREE.WebGLRenderer({ canvas: cv, alpha: true, premultipliedAlpha: false, antialias: false }); }
+      catch (e) { return fadeMode(); }
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
+      trailTex = new THREE.CanvasTexture(tc);
+      const robot = new THREE.TextureLoader().load(box.dataset.robot, t => { t.colorSpace = THREE.SRGBColorSpace; size(); });
+      mat = new THREE.ShaderMaterial({
+        vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }',
+        fragmentShader: FRAG, transparent: true,
+        uniforms: { robot: { value: robot }, trail: { value: trailTex }, time: { value: 0 }, aspect: { value: 2 / 3 }, cover: { value: new THREE.Vector2(1, 1) } }
+      });
+      const scene = new THREE.Scene(), cam = new THREE.Camera();
+      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+      clock = new THREE.Clock();
+      renderer.render(scene, cam);
+      box._draw = () => renderer.render(scene, cam);
+      size(); go();
+    }).catch(fadeMode);
+  };
+  const size = () => {
+    if (!renderer) return;
+    const b = box.getBoundingClientRect();
+    renderer.setSize(b.width, b.height, false);
+    const img = mat.uniforms.robot.value.image, cr = b.width / b.height;
+    mat.uniforms.aspect.value = cr;
+    if (img) { const ir = img.width / img.height; mat.uniforms.cover.value.set(ir > cr ? cr / ir : 1, ir > cr ? 1 : ir / cr); }
+  };
+
+  const tick = () => {
+    raf = 0;
+    if (!box._draw) return;
+    // fade the trail a little each frame so the smoke closes back over the robot
+    tx.fillStyle = 'rgba(0,0,0,.018)'; tx.fillRect(0, 0, 96, 144);
+    if (hover) dab(hover.x, hover.y, 26, .16);
+    if (burst) { burst.r = Math.min(200, burst.r + 5); dab(burst.x, burst.y, burst.r, .2); if (--burst.hold < 0) burst = null; }
+    energy = hover || burst ? 1 : energy * .985;
+    trailTex.needsUpdate = true;
+    mat.uniforms.time.value = clock.getElapsedTime();
+    box._draw();
+    if (tag) tag.textContent = energy > .35 ? 'Mode robot ●' : 'Off duty ✦';
+    if (energy > .01) raf = requestAnimationFrame(tick);
+    else { tx.fillStyle = '#000'; tx.fillRect(0, 0, 96, 144); trailTex.needsUpdate = true; box._draw(); }
+  };
+  const go = () => { if (!raf) raf = requestAnimationFrame(tick); };
+
+  new IntersectionObserver((en, o) => { if (en[0].isIntersecting) { start(); o.disconnect(); } }, { rootMargin: '400px' }).observe(box);
+  box.addEventListener('pointerenter', e => {
+    if (e.pointerType === 'touch') return;
+    start(); box.classList.add('used'); hover = last = at(e); energy = 1; go();
+  });
+  box.addEventListener('pointermove', e => {
+    if (e.pointerType === 'touch' || !hover) return;
+    const p = at(e), d = Math.hypot(p.x - last.x, p.y - last.y), steps = Math.min(10, Math.ceil(d / 3));
+    for (let i = 1; i <= steps; i++) dab(last.x + (p.x - last.x) * i / steps, last.y + (p.y - last.y) * i / steps, 16, .12);
+    hover = last = p;
+  });
+  box.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') hover = null; });
+  box.addEventListener('click', e => { // a tap on a phone, so scrolling over the photo never triggers it
+    start(); box.classList.add('used'); const p = at(e); burst = { x: p.x, y: p.y, r: 10, hold: 130 }; energy = 1; go();
+  });
+  addEventListener('resize', size);
+});
 </script>
 </body>
 </html>
