@@ -1124,7 +1124,7 @@ document.querySelectorAll('.morph').forEach(box => {
     // fade the trail a little each frame so the smoke closes back over the robot
     tx.fillStyle = 'rgba(0,0,0,.018)'; tx.fillRect(0, 0, 96, 144);
     if (hover) dab(hover.x, hover.y, 26, .16);
-    if (burst) { burst.r = Math.min(200, burst.r + 5); dab(burst.x, burst.y, burst.r, .2); if (--burst.hold < 0) burst = null; }
+    if (burst) { burst.r = Math.min(burst.max || 200, burst.r + 5); dab(burst.x, burst.y, burst.r, .2); if (--burst.hold < 0) burst = null; }
     energy = hover || burst ? 1 : energy * .985;
     trailTex.needsUpdate = true;
     mat.uniforms.time.value = clock.getElapsedTime();
@@ -1147,9 +1147,28 @@ document.querySelectorAll('.morph').forEach(box => {
     hover = last = p;
   });
   box.addEventListener('pointerleave', e => { if (e.pointerType !== 'touch') hover = null; });
-  box.addEventListener('click', e => { // a tap on a phone, so scrolling over the photo never triggers it
+  box.addEventListener('click', e => { // mouse only: a click fills the photo with smoke
+    if (touched) return;
     start(); box.classList.add('used'); const p = at(e); burst = { x: p.x, y: p.y, r: 10, hold: 130 }; energy = 1; go();
   });
+
+  // finger: the smoke opens only under the finger, like the mouse cursor.
+  // Listeners are passive, so a swipe over the photo still scrolls the page.
+  let touched = false, finger = null;
+  const fingerAt = t => at({ clientX: t.clientX, clientY: t.clientY });
+  box.addEventListener('touchstart', e => {
+    touched = true; start(); box.classList.add('used');
+    finger = last = hover = fingerAt(e.touches[0]); burst = { x: finger.x, y: finger.y, r: 8, max: 24, hold: 35 }; energy = 1; go();
+  }, { passive: true });
+  box.addEventListener('touchmove', e => {
+    if (!finger) return;
+    const p = fingerAt(e.touches[0]), d = Math.hypot(p.x - last.x, p.y - last.y), steps = Math.min(10, Math.ceil(d / 3));
+    for (let i = 1; i <= steps; i++) dab(last.x + (p.x - last.x) * i / steps, last.y + (p.y - last.y) * i / steps, 16, .12);
+    finger = hover = last = p;
+  }, { passive: true });
+  const lift = () => { finger = null; hover = null; setTimeout(() => touched = false, 600); };
+  box.addEventListener('touchend', lift);
+  box.addEventListener('touchcancel', lift);
   addEventListener('resize', size);
 });
 </script>
