@@ -294,7 +294,7 @@ nav.open .menu span:first-child{transform:translateY(4px) rotate(45deg)}nav.open
 .cat div span:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 
 /* formation */
-.edu{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:28px 0 56px}
+.edu{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin:28px 0 0}
 .edu div{border:1px solid var(--line);border-radius:20px;padding:28px}
 .edu b{display:block;font:700 1.35rem/1.25 Syne;margin:8px 0}
 
@@ -392,14 +392,6 @@ nav.open .menu span:first-child{transform:translateY(4px) rotate(45deg)}nav.open
 .phones:hover img:nth-child(4){transform:translateX(-50%) rotate(34deg)}
 .elementa .reel img{border-radius:18px;border:3px solid rgba(255,255,255,.12)}
 
-/* langues */
-.langs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.lang{border:1px solid var(--line);border-radius:20px;padding:28px}
-.lang b{font:700 1.6rem Syne}
-.lang .bar{height:4px;background:var(--line);border-radius:4px;margin-top:18px;overflow:hidden}
-.lang .bar i{display:block;height:100%;background:var(--accent);width:var(--w);transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease) .3s}
-.in .lang .bar i,.lang.in .bar i{transform:scaleX(1)}
-@media (max-width:760px){.langs{grid-template-columns:1fr}}
 
 /* contact */
 .contact{text-align:center;overflow:hidden}
@@ -857,15 +849,10 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
 
 <section style="padding-top:0">
   <div class="wrap">
-    <p class="mono rv">08 — Formation &amp; langues</p>
+    <p class="mono rv">08 — Formation</p>
     <div class="edu">
       <div class="rv"><p class="mono">2011 — 2014</p><b>Diplôme national d'ingénieur en génie logiciel</b><p style="color:var(--mute)">ESPRIT</p></div>
       <div class="rv" style="--d:.1s"><p class="mono">2007 — 2011</p><b>Maîtrise en informatique appliquée à la gestion</b><p style="color:var(--mute)">FSEGT</p></div>
-    </div>
-    <div class="langs">
-      <div class="lang rv"><b>Arabe</b><p class="mono">Langue maternelle</p><div class="bar"><i style="--w:100%"></i></div></div>
-      <div class="lang rv" style="--d:.1s"><b>Français</b><p class="mono">Courant</p><div class="bar"><i style="--w:95%"></i></div></div>
-      <div class="lang rv" style="--d:.2s"><b>Anglais</b><p class="mono">Courant</p><div class="bar"><i style="--w:85%"></i></div></div>
     </div>
   </div>
 </section>
