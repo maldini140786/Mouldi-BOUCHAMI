@@ -367,6 +367,12 @@ nav.open .menu span:first-child{transform:translateY(4px) rotate(45deg)}nav.open
 .elementa .sub{font:700 .85rem "Exo 2";letter-spacing:.35em;color:var(--gold)}
 .elementa p{color:#c9cdf0}
 .elementa .facts span{background:rgba(255,201,77,.12);border:1px solid rgba(255,201,77,.5);color:var(--gold)}
+.stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;position:relative;z-index:1}
+.store{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:8px 18px 8px 14px;border-radius:12px;background:#000;border:1px solid #a6a6a6;color:#fff;text-decoration:none;font:600 1.15rem/1.1 system-ui,-apple-system,"Segoe UI",sans-serif;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
+.store svg{width:26px;height:26px;flex:none}
+.store small{display:block;font-size:.68rem;font-weight:500;letter-spacing:.02em;opacity:.9}
+.store:hover,.store:focus-visible{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.store:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .spark{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,#fff 30%,#ffe9b0 50%,transparent 70%);box-shadow:0 0 60px 20px rgba(255,220,140,.35);
   margin-bottom:24px;animation:float 4s ease-in-out infinite;display:grid;place-items:center;font-size:1.8rem}
 @keyframes float{50%{transform:translateY(-14px)}}
@@ -808,6 +814,16 @@ dialog img{max-width:94vw;max-height:90vh;border-radius:14px}
           <p style="margin-top:20px">Elementa, une petite étincelle d'énergie pure, est enfermée dans une capsule de verre. Pour la libérer, il faut réussir de vraies expériences : miroirs et prismes, circuits électriques, flammes colorées, résonance, fentes de Young… Et une deuxième aile, le Laboratoire des Nombres, pour les maths jusqu'à la 6ᵉ.</p>
           <div class="facts">
             <span>84 phénomènes scientifiques</span><span>48 notions de maths</span><span>22 mondes</span>
+          </div>
+          <div class="stores">
+            <a class="store" href="https://apps.apple.com/fr/app/elementa/id6818677159" target="_blank" rel="noopener" aria-label="Télécharger Elementa dans l'App Store (nouvel onglet)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12.15 6.9c-.95 0-2.42-1.08-3.96-1.04-2.04.03-3.91 1.18-4.96 3.01-2.12 3.68-.55 9.1 1.52 12.09 1.01 1.45 2.2 3.09 3.79 3.04 1.52-.07 2.09-.99 3.94-.99 1.83 0 2.35.99 3.96.95 1.64-.03 2.68-1.48 3.68-2.95 1.16-1.69 1.64-3.33 1.66-3.42-.04-.01-3.18-1.22-3.22-4.86-.03-3.04 2.48-4.49 2.6-4.56-1.43-2.09-3.63-2.32-4.39-2.38-2-.16-3.68 1.09-4.62 1.09zM15.53 3.83c.84-1.01 1.4-2.43 1.25-3.83-1.21.05-2.66.8-3.53 1.82-.78.9-1.46 2.34-1.27 3.71 1.34.1 2.71-.69 3.55-1.7"/></svg>
+              <span><small>Télécharger dans</small>l'App Store</span>
+            </a>
+            <a class="store" href="https://play.google.com/store/apps/details?id=com.mouldibouchami.elementa" target="_blank" rel="noopener" aria-label="Télécharger Elementa sur Google Play (nouvel onglet)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00c3ff" d="M3.6 2.2 13.5 12l-9.9 9.8c-.4-.2-.6-.6-.6-1.1V3.3c0-.5.2-.9.6-1.1z"/><path fill="#00e676" d="M3.6 2.2c.3-.2.8-.2 1.2 0L16.8 9.3 13.5 12z"/><path fill="#ff3d44" d="M13.5 12l3.3 2.7L4.8 21.8c-.4.2-.9.2-1.2 0z"/><path fill="#ffc400" d="M16.8 9.3l3.6 2.1c.5.3.5.9 0 1.2l-3.6 2.1-3.3-2.7z"/></svg>
+              <span><small>Disponible sur</small>Google Play</span>
+            </a>
           </div>
         </div>
         <div class="phones">
